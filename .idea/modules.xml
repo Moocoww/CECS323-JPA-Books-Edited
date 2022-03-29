@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/CECS323-JPA-Books-Leilani.iml" filepath="$PROJECT_DIR$/.idea/CECS323-JPA-Books-Leilani.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CECS323-JPA-Books-Leilani/cecs323-jpa-car-club-main/cecs323-jpa-CarClub.iml" filepath="$PROJECT_DIR$/CECS323-JPA-Books-Leilani/cecs323-jpa-car-club-main/cecs323-jpa-CarClub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CECS323-JPA-Books-Leilani/CustomerOrders-master/cecs323-jpa-Customer-Orders.iml" filepath="$PROJECT_DIR$/CECS323-JPA-Books-Leilani/CustomerOrders-master/cecs323-jpa-Customer-Orders.iml" />
+    </modules>
+  </component>
+</project>
