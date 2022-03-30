@@ -48,7 +48,7 @@ public class MainMenu {
      * Here also, we want to make sure that the one Logger instance is readily available throughout the
      * application, without resorting to creating a global variable.
      */
-    private static final Logger LOGGER = Logger.getLogger(Books.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MainMenu.class.getName());
 
     /**
      * The constructor for the CarClub class.  All that it does is stash the provided EntityManager
@@ -61,7 +61,7 @@ public class MainMenu {
 
     public static void main(String[] args) {
         LOGGER.fine("Creating EntityManagerFactory and EntityManager");
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Books");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("MainMenu");
         EntityManager manager = factory.createEntityManager();
         // Create an instance of CarClub and store our new EntityManager as an instance variable.
         MainMenu books = new MainMenu(manager);

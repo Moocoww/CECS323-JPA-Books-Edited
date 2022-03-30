@@ -32,7 +32,6 @@ public class Books {
 
     @ManyToOne
     @JoinColumn(name="email", referencedColumnName = "email")
-    @Column(nullable=false, length = 30)
     private AuthoringEntities authoring_entity_name;
 
     @Column(nullable=false, length = 4)
