@@ -12,123 +12,89 @@
 
 package csulb.cecs323.Books;
 
-// Import all of the entity classes that we have written for this application.
-//import csulb.cecs323.model.*;
+import javax.persistence.*;
+import java.util.Objects;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
-/**
- * A simple application to demonstrate how to persist an object in JPA.
- * <p>
- * This is for demonstration and educational purposes only.
- * </p>
- * <p>
- *     Originally provided by Dr. Alvaro Monge of CSULB, and subsequently modified by Dave Brown.
- * </p>
- */
+@Entity
 public class Books {
-   /**
-    * You will likely need the entityManager in a great many functions throughout your application.
-    * Rather than make this a global variable, we will make it an instance variable within the CarClub
-    * class, and create an instance of CarClub in the main.
-    */
-   private EntityManager entityManager;
+    @Id
 
-   /**
-    * The Logger can easily be configured to log to a file, rather than, or in addition to, the console.
-    * We use it because it is easy to control how much or how little logging gets done without having to
-    * go through the application and comment out/uncomment code and run the risk of introducing a bug.
-    * Here also, we want to make sure that the one Logger instance is readily available throughout the
-    * application, without resorting to creating a global variable.
-    */
-   private static final Logger LOGGER = Logger.getLogger(Books.class.getName());
+    @Column(nullable=false, length = 17)
+    private String ISBN;
 
-   /**
-    * The constructor for the CarClub class.  All that it does is stash the provided EntityManager
-    * for use later in the application.
-    * @param manager    The EntityManager that we will use.
-    */
-   public Books(EntityManager manager) {
-      this.entityManager = manager;
-   }
+    @Column(nullable=false,length = 80)
+    private String title;
 
-   public static void main(String[] args) {
-      LOGGER.fine("Creating EntityManagerFactory and EntityManager");
-      EntityManagerFactory factory = Persistence.createEntityManagerFactory("Books");
-      EntityManager manager = factory.createEntityManager();
-      // Create an instance of CarClub and store our new EntityManager as an instance variable.
-      Books books = new Books(manager);
+    @ManyToOne
+    @JoinColumn(name = "name", referencedColumnName = "name")
+    @Column(nullable=false, length = 80)
+    private Publishers publisher_name;
+
+    @ManyToOne
+    @JoinColumn(name="email", referencedColumnName = "email")
+    @Column(nullable=false, length = 30)
+    private AuthoringEntities authoring_entity_name;
+
+    @Column(nullable=false, length = 4)
+    private int year_published;
+
+    public Books() {
+    }
+
+    public Books(String ISBN, String title, Publishers publisher_name, AuthoringEntities authoring_entity_name, int year_published) {
+        this.ISBN =ISBN;
+        this.title = title;
+        this.publisher_name = publisher_name;
+        this.authoring_entity_name = authoring_entity_name;
+        this.year_published = year_published;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Publishers getPublisher_name() {
+        return publisher_name;
+    }
+
+    public void setPublisher_name(Publishers publisher_name) {
+        this.publisher_name = publisher_name;
+    }
+
+    public AuthoringEntities getAuthoring_entity_name() {
+        return authoring_entity_name;
+    }
+
+    public void setAuthoring_entity_name(AuthoringEntities authoring_entity_name) {
+        this.authoring_entity_name = authoring_entity_name;
+    }
+
+    public int getYear_published() {
+        return year_published;
+    }
+
+    public void setYear_published(int year_published) {
+        this.year_published = year_published;
+    }
+
+    @Override
+    public String toString(){
+        return "ISBN: " + this.ISBN + "Title: " + this.title + "Publisher name: " + this.publisher_name.getName() + "Authoring entity name: " + this.authoring_entity_name.getName() + "Published year: " + this.year_published;
+    }
+    @Override
+    public int hashCode(){return Objects.hash(this.getISBN() , this.getTitle() , this.getPublisher_name() , this.getAuthoring_entity_name() , this.getYear_published());}
 
 
-      // Any changes to the database need to be done within a transaction.
-      // See: https://en.wikibooks.org/wiki/Java_Persistence/Transactions
-
-      LOGGER.fine("Begin of Transaction");
-      EntityTransaction tx = manager.getTransaction();
-
-      tx.begin();
-      // List of owners that I want to persist.  I could just as easily done this with the seed-data.sql
-//      List <Owners> owners = new ArrayList<Owners>();
-//      // Load up my List with the Entities that I want to persist.  Note, this does not put them
-//      // into the database.
-//      owners.add(new Owners("Reese", "Mike", "714-892-5544"));
-//      owners.add(new Owners("Leck", "Carl", "714-321-3729"));
-//      owners.add(new Owners("Guitierez", "Luis", "562-982-2899"));
-//      // Create the list of owners in the database.
-//      carclub.createEntity (owners);
-      //what happened to git
-
-      // Commit the changes so that the new data persists and is visible to other users.
-      tx.commit();
-      LOGGER.fine("End of Transaction");
-
-   } // End of the main method
-
-   /**
-    * Create and persist a list of objects to the database.
-    * @param entities   The list of entities to persist.  These can be any object that has been
-    *                   properly annotated in JPA and marked as "persistable."  I specifically
-    *                   used a Java generic so that I did not have to write this over and over.
-    */
-   public <E> void createEntity(List <E> entities) {
-      for (E next : entities) {
-         LOGGER.info("Persisting: " + next);
-         // Use the CarClub entityManager instance variable to get our EntityManager.
-         this.entityManager.persist(next);
-      }
-
-      // The auto generated ID (if present) is not passed in to the constructor since JPA will
-      // generate a value.  So the previous for loop will not show a value for the ID.  But
-      // now that the Entity has been persisted, JPA has generated the ID and filled that in.
-      for (E next : entities) {
-         LOGGER.info("Persisted object after flush (non-null id): " + next);
-      }
-   } // End of createEntity member method
-
-   /**
-    * Think of this as a simple map from a String to an instance of auto_body_styles that has the
-    * same name, as the string that you pass in.  To create a new Cars instance, you need to pass
-    * in an instance of auto_body_styles to satisfy the foreign key constraint, not just a string
-    * representing the name of the style.
-    * @param name       The name of the autobody style that you are looking for.
-    * @return           The auto_body_styles instance corresponding to that style name.
-    */
-//   public auto_body_styles getStyle (String name) {
-//      // Run the native query that we defined in the auto_body_styles entity to find the right style.
-//      List<auto_body_styles> styles = this.entityManager.createNamedQuery("ReturnAutoBodyStyle",
-//              auto_body_styles.class).setParameter(1, name).getResultList();
-//      if (styles.size() == 0) {
-//         // Invalid style name passed in.
-//         return null;
-//      } else {
-//         // Return the style object that they asked for.
-//         return styles.get(0);
-//      }
-//   }// End of the getStyle method
-} // End of CarClub class
+} // End of Books class
