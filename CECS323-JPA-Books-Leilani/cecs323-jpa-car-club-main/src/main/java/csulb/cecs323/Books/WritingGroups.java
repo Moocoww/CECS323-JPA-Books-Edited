@@ -43,7 +43,7 @@ public class WritingGroups extends AuthoringEntities {
 
     @Override
     public String toString() {
-        return "Head writer: " + head_writer + "Year formed: " + year_formed;
+        return "Email: " + getEmail() + "\t| Name: "+ getName() + "\t| Authoring Entity Type: " +getAuthoring_entity_type()+ "\t| Head writer: " + head_writer + "\t| Year formed: " + year_formed;
     }
     @Override
     public int hashCode(){return Objects.hash(this.getHead_writer(), this.getYear_formed());}

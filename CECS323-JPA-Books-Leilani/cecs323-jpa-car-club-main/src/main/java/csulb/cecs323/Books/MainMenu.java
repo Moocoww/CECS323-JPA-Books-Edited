@@ -81,6 +81,35 @@ public class MainMenu {
         //what happened to git
         System.out.println("Enter a new publisher: ");
 
+        //AuthoringEntities ae = new AuthoringEntities("janedoe@gmail.com", "Jane Doe", "Literature");  //cannot instantiate base class
+//        ae = new IndividualAuthors();
+
+        WritingGroups wg1 = new WritingGroups("shakespearefans@wg.com", "Shakespeare Fans", "Writing Group", "Shakespeare",2022);
+        IndividualAuthors ia1 = new IndividualAuthors("georgeorwell@company.com", "George Orwell", "Individual Author");
+        AdHocTeams adt1 = new AdHocTeams("companyname@company.com", "Pearsons Teams", "Ad Hoc Team");
+        System.out.println(ia1);
+        System.out.println(adt1);
+        System.out.println(wg1);
+
+
+        AdHocTeamMembers adtm1 = new AdHocTeamMembers(adt1, ia1);
+        IndividualAuthors ia2 = new IndividualAuthors("mehrsabar@company.com", "Mehrsa Baradaran", "Individual Author");
+
+        AdHocTeamMembers adtm2 = new AdHocTeamMembers(adt1, ia2);
+        List <Books> booklist = new ArrayList<>();
+        List<AdHocTeamMembers> totalmems = new ArrayList<AdHocTeamMembers>();
+        totalmems.add(adtm1);
+        totalmems.add(adtm2);
+        System.out.println(totalmems);
+
+//        System.out.println(adtm1);
+//        System.out.println(adtm2);
+
+        Publishers p1 = new Publishers("Oxford Publishers", "800-855-1234", "oxfordpublishers@oxford.com");
+        Books b1 = new Books("123456", "Animal Farm", p1, wg1, 1999);
+        System.out.println(p1);
+        System.out.println(b1);
+
 
 
         // Commit the changes so that the new data persists and is visible to other users.
@@ -115,7 +144,7 @@ public class MainMenu {
      * same name, as the string that you pass in.  To create a new Cars instance, you need to pass
      * in an instance of auto_body_styles to satisfy the foreign key constraint, not just a string
      * representing the name of the style.
-     * @param name       The name of the autobody style that you are looking for.
+     * @param
      * @return           The auto_body_styles instance corresponding to that style name.
      */
 //   public auto_body_styles getStyle (String name) {

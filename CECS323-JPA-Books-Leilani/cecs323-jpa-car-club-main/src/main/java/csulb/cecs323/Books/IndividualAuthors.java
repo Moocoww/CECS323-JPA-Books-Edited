@@ -20,12 +20,11 @@ public class IndividualAuthors extends AuthoringEntities {
         this.adhocTeam = adhocTeam;
     }
 
-
-    public Set getAdhocTeam() {
-        return adhocTeam;
-    }
-
-    public void setAdhocTeam(Set adhocTeam) {
-        this.adhocTeam = adhocTeam;
-    }
+//    public Set getAdhocTeam() {
+//        return adhocTeam;
+//    }
+//
+//    public void setAdhocTeam(Set adhocTeam) {
+//        this.adhocTeam = adhocTeam;
+//    }
 }
