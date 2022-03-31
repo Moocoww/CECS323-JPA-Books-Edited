@@ -79,7 +79,8 @@ public class MainMenu {
 //      // Create the list of owners in the database.
 //      carclub.createEntity (owners);
         //what happened to git
-        System.out.println("Enter a new publisher: ");
+        //System.out.println("Enter a new publisher: ");
+        //List<WritingGroups>
 
         //AuthoringEntities ae = new AuthoringEntities("janedoe@gmail.com", "Jane Doe", "Literature");  //cannot instantiate base class
 //        ae = new IndividualAuthors();
@@ -110,6 +111,112 @@ public class MainMenu {
         System.out.println(p1);
         System.out.println(b1);
 
+
+        Scanner scan = new Scanner(System.in);
+        int menuOption = -1;
+        boolean menuDone = false;
+        boolean validMenuOption = false;
+        List<Publishers> totalPublishers = new ArrayList<Publishers>();
+        List<Books> totalBooks = new ArrayList<Books>();
+
+        while (!menuDone) {
+            String menu = "-- Main Menu --" + "\nEnter an option: "+ "\n1. Add an Authoring Entity"
+                    + "\n2. Add Publisher" + "\n3. Add Book" + "\n4. Update a book" + "\n5. Delete a book" + "\n6. Quit";
+            System.out.println(menu);
+            while (!validMenuOption) {
+                try {
+                    menuOption = scnr.nextInt();
+                    validMenuOption = true;
+
+                } catch (Exception e) {
+                    System.out.println("Re-enter a valid option.");
+                    System.out.println(menu);
+                    scnr.nextLine();
+                }
+            }
+
+            switch (menuOption) {
+                case 1:
+                    //Authoring Entity
+                    validMenuOption = false;
+                    scnr.nextLine();
+                    break;
+                case 2:
+                    // Adding Publisher
+                    System.out.println("Enter Publisher name:");
+                    String pubName = scnr.nextLine();
+
+                    //check for existing publisher
+
+                    System.out.println("Enter Publisher phone:");
+                    String pubPhone = scnr.nextLine();
+
+                    System.out.println("Enter Publisher email:");
+                    String pubEmail = scnr.nextLine();
+
+                    Publishers p = new Publishers(pubName, pubPhone, pubEmail);
+                    totalPublishers.add(p);
+
+
+                    validMenuOption = false;
+                    scnr.nextLine(); //clearing buffer
+                    break;
+                case 3:
+                    // Adding Book
+                    System.out.println("Enter Book's ISBN:");
+                    String ISBN = scnr.nextLine();
+                    int returnISBN = getInt();//check for validity
+
+                    System.out.println("Enter Book's title: ");
+                    String bookTitle = scnr.nextLine();
+
+                    System.out.println("Enter Book's publisher name: ");
+                    String bookPub = scnr.nextLine();
+                    for (int i = 0; i < totalPublishers.size(); i++) {
+                        if(totalPublishers.get(i).getName().equals(bookPub)){
+                            //publisher exists, can put it into constructor
+                        }
+                        else {
+                            //publisher doesnt exist, need to make it and prompt user for pub info
+                            System.out.println("");
+
+                        }
+                    }
+
+                    System.out.println("Enter Book's authoring entity name: ");
+                    String bookAuth = scnr.nextLine();
+
+                    System.out.println("Enter Book's year published: ");
+                    String bookYear = scnr.nextLine();
+                    int returnYear = getInt();//check for validity
+
+//                    Books b = new Books(returnISBN, bookTitle, , ,returnYear); // FIX ME
+//                    totalBooks.add(b);
+
+                    validMenuOption = false;
+                    scnr.nextLine();
+                    break;
+                case 4:
+                    //update a book
+
+
+                    break;
+                case 5:
+                    //delete a book
+
+                    break;
+                case 6:
+                    //quitting
+                    System.out.println("Quitting...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Re-enter a valid option.");
+                    validMenuOption = false;
+                    scnr.nextLine();
+                    break;
+            }
+        }
 
 
         // Commit the changes so that the new data persists and is visible to other users.
@@ -160,3 +267,5 @@ public class MainMenu {
 //      }
 //   }// End of the getStyle method
 } // End of CarClub class
+
+
