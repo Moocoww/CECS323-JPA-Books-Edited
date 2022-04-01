@@ -316,10 +316,10 @@ public class MainMenu {
                     validMenuOption = false;
 
                     break;
-//                case 6:
-//                    //List specific writing group information
-//
-//                    break;
+                case 6:
+                    //List specific writing group information
+
+                    break;
 //                case 7:
 //                    //update a book
 //                    break;
@@ -391,12 +391,13 @@ public class MainMenu {
 //      }
 //   }// End of the getStyle method
 
+
     /**
      *
      */
     public static void display_books(List <Books> books) {
 
-        System.out.println("Books Information\n");
+        System.out.println("-----Books Information----");
         if (books.size() == 0){
             System.out.println("No books available");
         }
@@ -407,13 +408,15 @@ public class MainMenu {
         }
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter Book ISBN:");
-        String pubName = scnr.nextLine();
+        String bookName = "";
         boolean done = false;
         while (!done) {
+            bookName = scnr.nextLine();
             for (int i = 0; i < books.size(); i++) {
                 boolean found = false;
-                if (books.get(i).getISBN().equals(pubName)) {
+                if (books.get(i).getISBN().equals(bookName)) {
                     System.out.println(books.get(i).toString());
+                    found = true;
                     done = true;
                 }
 
@@ -423,33 +426,55 @@ public class MainMenu {
             }
         }
 
-
-
-//        if (booklist.size() == 0) {
-//            System.out.println("No books available");
+    }//end of display_books
+//    /**
+//     *
+//     */
+//    public static void display_books(List <Books> books) {
 //
-//        } else {
-//            for (int i = 0; i < booklist.size(); i++) {
-//                System.out.println(booklist.get(i).toString());
+//        System.out.println("-----Books Information----");
+//        if (books.size() == 0){
+//            System.out.println("No books available");
+//        }
+//        else{
+//            for (int i = 0; i < books.size(); i++){
+//                System.out.println(books.get(i).getISBN()) ;
 //            }
 //        }
-    }//end of display_books
+//        Scanner scnr = new Scanner(System.in);
+//        System.out.println("Enter Book ISBN:");
+//        String bookName = "";
+//        boolean done = false;
+//        while (!done) {
+//            bookName = scnr.nextLine();
+//            for (int i = 0; i < books.size(); i++) {
+//                boolean found = false;
+//                if (books.get(i).getISBN().equals(bookName)) {
+//                    System.out.println(books.get(i).toString());
+//                    found = true;
+//                    done = true;
+//                }
+//
+//                if (!found) {
+//                    System.out.println("Invalid ISBN. Please Re-enter ISBN: ");
+//                }
+//            }
+//        } //end of display_book
 
-
-    /**
-     * @param booklist
-     * @param ISBN
-     */
-    public void delete_book(List<Books> booklist, String ISBN) {
-        for (int i = 0; i < booklist.size(); i++) {
-            if (booklist.get(i).getISBN().equals(ISBN)) {
-                booklist.remove(i);
-            } else {
-                //book doesnt exist
-                System.out.println("The book doesn't exists");
-            }
-        }
-    }
+//    /**
+//     * @param booklist
+//     * @param ISBN
+//     */
+//    public void delete_book(List<Books> booklist, String ISBN) {
+//        for (int i = 0; i < booklist.size(); i++) {
+//            if (booklist.get(i).getISBN().equals(ISBN)) {
+//                booklist.remove(i);
+//            } else {
+//                //book doesnt exist
+//                System.out.println("The book doesn't exists");
+//            }
+//        }
+//    }
 
     public void update_book() {
 
@@ -479,25 +504,32 @@ public class MainMenu {
             System.out.println("No Publishers available.");
         }
         else {
-            System.out.println("Publisher Information:" + "\n-------------------------------------------");
+            System.out.println("-----Publisher Information----");
             for (int i = 0; i < publishers.size(); i++) {
-                System.out.println(publishers.get(i).getName());
+                System.out.println((i+1) + ". " + publishers.get(i).getName());
             }
         }
 
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter a Publisher Name:");
-        String pubName = scnr.nextLine();
-        for (int i = 0; i < publishers.size(); i++) {
-            boolean found = false;
-            if (publishers.get(i).getName().equals(pubName)) {
-                System.out.println(publishers.get(i).toString());
-                found = true;
-            }
-            if (!found) {
-                System.out.println("Publisher not found.");
+        String pubName = "";
+        boolean validInput = false;
+
+        while (!validInput) {
+            pubName = scnr.nextLine();
+            for (int i = 0; i < publishers.size(); i++) {
+                boolean found = false;
+                if (publishers.get(i).getName().equals(pubName)) {
+                    System.out.println(publishers.get(i).toString());
+                    found = true;
+                    validInput = true;
+                }
+                if (!found) {
+                    System.out.println("Publisher not found. Re-enter Publisher name: ");
+                }
             }
         }
+
         //scnr.nextLine();
     } // End of CarClub class
 }
