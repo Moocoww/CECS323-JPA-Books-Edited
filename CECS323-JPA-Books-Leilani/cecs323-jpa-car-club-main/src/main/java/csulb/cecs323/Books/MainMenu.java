@@ -101,7 +101,9 @@ public class MainMenu {
 //        System.out.println(adtm2);
 
         Publishers p1 = new Publishers("Oxford Publishers", "800-855-1234", "oxfordpublishers@oxford.com");
+        Publishers p2 = new Publishers("Monkeys", "800-900-9999", "monkey@company.com");
         Books b1 = new Books("123456", "Animal Farm", p1, wg1, 1999);
+        Books b2 = new Books("123450", "Animals Run", p1, ia1, 1990);
         System.out.println(p1);
         System.out.println(b1);
 
@@ -112,8 +114,10 @@ public class MainMenu {
         boolean validMenuOption = false;
         List<Publishers> totalPublishers = new ArrayList<Publishers>();
         totalPublishers.add(p1);
+        totalPublishers.add(p2);
         List<Books> totalBooks = new ArrayList<Books>();
         totalBooks.add(b1);
+        totalBooks.add(b2);
         List<AuthoringEntities> totalAuthoringEntities = new ArrayList<AuthoringEntities>();
 
         while (!menuDone) {
@@ -403,26 +407,26 @@ public class MainMenu {
         }
         else{
             for (int i = 0; i < books.size(); i++){
-                System.out.println(books.get(i).getISBN()) ;
+                System.out.println((i+1) + ". \t" + books.get(i).getISBN()) ;
             }
         }
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter Book ISBN:");
         String bookName = "";
         boolean done = false;
+        boolean found = false;
         while (!done) {
             bookName = scnr.nextLine();
             for (int i = 0; i < books.size(); i++) {
-                boolean found = false;
+
                 if (books.get(i).getISBN().equals(bookName)) {
                     System.out.println(books.get(i).toString());
                     found = true;
                     done = true;
                 }
-
-                if (!found) {
-                    System.out.println("Invalid ISBN. Please Re-enter ISBN: ");
-                }
+            }
+            if (!found) {
+                System.out.println("Invalid ISBN. Please Re-enter ISBN: ");
             }
         }
 
@@ -506,7 +510,7 @@ public class MainMenu {
         else {
             System.out.println("-----Publisher Information----");
             for (int i = 0; i < publishers.size(); i++) {
-                System.out.println((i+1) + ". " + publishers.get(i).getName());
+                System.out.println((i+1) + ". \t" + publishers.get(i).getName());
             }
         }
 
@@ -517,19 +521,17 @@ public class MainMenu {
 
         while (!validInput) {
             pubName = scnr.nextLine();
+            boolean found = false;
             for (int i = 0; i < publishers.size(); i++) {
-                boolean found = false;
                 if (publishers.get(i).getName().equals(pubName)) {
                     System.out.println(publishers.get(i).toString());
                     found = true;
                     validInput = true;
                 }
-                if (!found) {
-                    System.out.println("Publisher not found. Re-enter Publisher name: ");
-                }
+            }
+            if (!found) {
+                System.out.println("Publisher not found. Re-enter Publisher name: ");
             }
         }
-
-        //scnr.nextLine();
     } // End of CarClub class
 }
