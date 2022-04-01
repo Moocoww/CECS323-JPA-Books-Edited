@@ -7,8 +7,3 @@
 -- INSERT INTO auto_body_styles (name, description) VALUES ('sport-utility vehicle', 'A high-performance four-wheel-drive vehicle.')
 -- INSERT INTO auto_body_styles (name, description) VALUES ('sports car', 'A low-built car designed for performance at high speeds.')
 -- INSERT INTO auto_body_styles (name, description) VALUES ('station wagon', 'A car with longer body than usual, incorporating a large carrying area behind the seats and having an extra door at the rear for easy loading.')
-
-INSERT INTO individualauthors (email, name, authoring_entity_type) VALUES ('georgeorwell@company.com', 'George Orwell', 'Individual Author')
-
-
--- INSERT INTO writing_groups (email, name, authoring_entity_type, head_writer, year_formed) VALUES ("shakespearefans@wg.com", "Shakespeare Fans", )

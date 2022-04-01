@@ -1,24 +1,16 @@
-/*
- * Licensed under the Academic Free License (AFL 3.0).
- *     http://opensource.org/licenses/AFL-3.0
- *
- *  This code is distributed to CSULB students in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE, other than educational.
- *
- *  2018 Alvaro Monge <alvaro.monge@csulb.edu>
- *
- */
 
 package csulb.cecs323.Books;
 
 // Import all of the entity classes that we have written for this application.
 //import csulb.cecs323.model.*;
 
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.Scanner;
@@ -121,6 +113,8 @@ public class MainMenu {
         List<Publishers> totalPublishers = new ArrayList<Publishers>();
         totalPublishers.add(p1);
         List<Books> totalBooks = new ArrayList<Books>();
+        totalBooks.add(b1);
+        List<AuthoringEntities> totalAuthoringEntities = new ArrayList<AuthoringEntities>();
 
         while (!menuDone) {
             String menu = "-- Main Menu --" + "\nEnter an option: " + "\n1. Add an Authoring Entity"
@@ -280,6 +274,7 @@ public class MainMenu {
                     AuthoringEntities bookAuthEntity = new AuthoringEntities();
 
                     boolean aeFound = false;
+
                     for (int i = 0; i < totalAuthoringEntities.size(); i++) {
                         // Authoring Entity already exists
                         if (totalAuthoringEntities.get(i).getName().equals(bookAuth)) {
@@ -310,14 +305,16 @@ public class MainMenu {
                     scnr.nextLine();
                     break;
                 case 4:
-                   //List specific publisher information
+                    //List specific publisher information
                     list_publisher_info(totalPublishers);
                     validMenuOption = false;
+
                     break;
                 case 5:
-                   // List specific book information
+                    // List specific book information
                     display_books(totalBooks);
                     validMenuOption = false;
+
                     break;
 //                case 6:
 //                    //List specific writing group information
@@ -331,11 +328,11 @@ public class MainMenu {
 //                case 8:
 //                    //delete a book
 //                    break;
-//                case 9:
-//                    //quitting
-//                    System.out.println("Quitting...");
-//                    System.exit(0);
-//                    break;
+                case 9:
+                    //quitting
+                    System.out.println("Quitting...");
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Re-enter a valid option.");
                     validMenuOption = false;
@@ -405,20 +402,24 @@ public class MainMenu {
         }
         else{
             for (int i = 0; i < books.size(); i++){
-               System.out.println(books.get(i).getISBN()) ;
+                System.out.println(books.get(i).getISBN()) ;
             }
         }
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter Book ISBN:");
         String pubName = scnr.nextLine();
-        for (int i = 0; i < books.size(); i++) {
-            boolean found = false;
-            if (books.get(i).getISBN().equals(pubName)) {
-                System.out.println(books.get(i).toString());
-            }
+        boolean done = false;
+        while (!done) {
+            for (int i = 0; i < books.size(); i++) {
+                boolean found = false;
+                if (books.get(i).getISBN().equals(pubName)) {
+                    System.out.println(books.get(i).toString());
+                    done = true;
+                }
 
-            if (!found){
-                System.out.println("Invalid ISBN");
+                if (!found) {
+                    System.out.println("Invalid ISBN. Please Re-enter ISBN: ");
+                }
             }
         }
 
@@ -500,5 +501,3 @@ public class MainMenu {
         //scnr.nextLine();
     } // End of CarClub class
 }
-
-
