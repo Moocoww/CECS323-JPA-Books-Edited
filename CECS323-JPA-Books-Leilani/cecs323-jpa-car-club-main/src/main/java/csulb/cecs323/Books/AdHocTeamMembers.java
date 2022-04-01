@@ -1,6 +1,7 @@
 package csulb.cecs323.Books;
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class AdHocTeamMembers {
@@ -12,7 +13,6 @@ public class AdHocTeamMembers {
     @Id
     @ManyToOne
     private IndividualAuthors individualAuthor;
-
 
     public AdHocTeamMembers() {
     }
@@ -40,4 +40,12 @@ public class AdHocTeamMembers {
     public void setIndividualAuthor(IndividualAuthors individualAuthor) {
         this.individualAuthor = individualAuthor;
     }
+
+    @Override
+    public String toString() {
+        return "AdHocTeamMembers: " +
+                "AdHoc Team {" + adhocteam.getName() + "}" +
+                " \t| Individual Author {" + individualAuthor.getName() + "}";
+    }
+
 }
