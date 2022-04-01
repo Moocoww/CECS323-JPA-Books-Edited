@@ -16,6 +16,21 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name="ReturnAllBooks",
+                query = "SELECT * " +
+                        "FROM   BOOKS ",
+                resultClass = Books.class
+        ),
+        @NamedNativeQuery(
+                name="ReturnABook",
+                query = "SELECT * " +
+                        "FROM   BOOKS " +
+                        "WHERE  ISBN = ?",
+                resultClass = Books.class
+        )
+})
 public class Books {
     @Id
 

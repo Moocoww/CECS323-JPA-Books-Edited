@@ -53,11 +53,13 @@ public class MainMenu {
     /**
      * The constructor for the CarClub class.  All that it does is stash the provided EntityManager
      * for use later in the application.
-     * @param manager    The EntityManager that we will use.
+     *
+     * @param manager The EntityManager that we will use.
      */
     public MainMenu(EntityManager manager) {
         this.entityManager = manager;
     }
+
 
     public static void main(String[] args) {
         LOGGER.fine("Creating EntityManagerFactory and EntityManager");
@@ -85,7 +87,7 @@ public class MainMenu {
         //AuthoringEntities ae = new AuthoringEntities("janedoe@gmail.com", "Jane Doe", "Literature");  //cannot instantiate base class
 //        ae = new IndividualAuthors();
 
-        WritingGroups wg1 = new WritingGroups("shakespearefans@wg.com", "Shakespeare Fans", "Writing Group", "Shakespeare",2022);
+        WritingGroups wg1 = new WritingGroups("shakespearefans@wg.com", "Shakespeare Fans", "Writing Group", "Shakespeare", 2022);
         IndividualAuthors ia1 = new IndividualAuthors("georgeorwell@company.com", "George Orwell", "Individual Author");
         AdHocTeams adt1 = new AdHocTeams("companyname@company.com", "Pearsons Teams", "Ad Hoc Team");
         System.out.println(ia1);
@@ -97,7 +99,7 @@ public class MainMenu {
         IndividualAuthors ia2 = new IndividualAuthors("mehrsabar@company.com", "Mehrsa Baradaran", "Individual Author");
 
         AdHocTeamMembers adtm2 = new AdHocTeamMembers(adt1, ia2);
-        List <Books> booklist = new ArrayList<>();
+        List<Books> booklist = new ArrayList<>();
         List<AdHocTeamMembers> totalmems = new ArrayList<AdHocTeamMembers>();
         totalmems.add(adtm1);
         totalmems.add(adtm2);
@@ -117,11 +119,14 @@ public class MainMenu {
         boolean menuDone = false;
         boolean validMenuOption = false;
         List<Publishers> totalPublishers = new ArrayList<Publishers>();
+        totalPublishers.add(p1);
         List<Books> totalBooks = new ArrayList<Books>();
 
         while (!menuDone) {
-            String menu = "-- Main Menu --" + "\nEnter an option: "+ "\n1. Add an Authoring Entity"
-                    + "\n2. Add Publisher" + "\n3. Add Book" + "\n4. Update a book" + "\n5. Delete a book" + "\n6. Quit";
+            String menu = "-- Main Menu --" + "\nEnter an option: " + "\n1. Add an Authoring Entity"
+                    + "\n2. Add Publisher" + "\n3. Add Book" + "\n4. List specific publisher information" +
+                    "\n5. List specific book information" + "\n6. List specific writing group information" +
+                    "\n7. Update a book" + "\n8. Delete a book" + "\n9. Quit";
             System.out.println(menu);
             while (!validMenuOption) {
                 try {
@@ -136,17 +141,65 @@ public class MainMenu {
             }
 
             switch (menuOption) {
-                case 1:
-                    //Authoring Entity
-                    validMenuOption = false;
-                    scnr.nextLine();
-                    break;
+//                case 1:
+//                    //Authoring Entity
+//                    System.out.println("Enter an Authoring Entity name: ");
+//                    scnr.nextLine();
+//
+//                    //check for existing email
+////                    boolean validAuthEntEmail = false;
+////                    while (!validAuthEntEmail){
+////                        System.out.println("Enter an Authoring Entity email: ");
+////                        String authEntEmail = scnr.nextLine();
+////
+////
+////
+////                    }
+//
+//                    //add writing group
+//                    System.out.println("Enter a Writing Group header writer name: ");
+//                    String writerName = scan.nextLine();
+//                    //check for existing writing group
+////                    boolean exist = false;
+////
+//////                    while (!exist){
+//////                        for (int i = 0; i < totalAuthoringEntities.size(); i++){
+//////                            if (totalAuthoringEntities.get(i).name)
+//////                        }
+//////                    }
+//
+//
+//                    //add individual author
+//                    //add ad hoc team
+//                    //add author to ad hoc team
+//                    validMenuOption = false;
+//                    scnr.nextLine();
+//                    break;
                 case 2:
-                    // Adding Publisher
+                    // Adding new Publisher
+                    boolean validPubName = false;
+                    String pubName = "";
                     System.out.println("Enter Publisher name:");
-                    String pubName = scnr.nextLine();
+                    scnr.nextLine();
+                    while (!validPubName) {
+                        pubName = scnr.nextLine();
 
-                    //check for existing publisher
+                        //checking if name already exists
+                        boolean done = false;
+                        while (!done) {
+                            for (int i = 0; i < totalPublishers.size(); i++) {
+                                if (totalPublishers.get(i).getName().equals(pubName)) {
+                                    System.out.println("That Publisher already exists! Re-enter a new Publisher name.");
+                                    validPubName = false;
+                                    done = true;
+                                }
+                                else{
+                                    done = true;
+                                    validPubName = true;
+                                }
+                            }
+                        }
+                    }
 
                     System.out.println("Enter Publisher phone:");
                     String pubPhone = scnr.nextLine();
@@ -162,58 +215,131 @@ public class MainMenu {
                     scnr.nextLine(); //clearing buffer
                     break;
                 case 3:
-                    // Adding Book
+                    // Adding new Book
+                    boolean validBookISBN = false;
+                    String ISBN = "";
+
                     System.out.println("Enter Book's ISBN:");
-                    String ISBN = scnr.nextLine();
-                    int returnISBN = getInt();//check for validity
+                    scnr.nextLine(); //clear buffer
+
+                    while (!validBookISBN) {
+                        ISBN = scnr.nextLine();
+
+                        //checking if book already exists
+                        boolean done = false;
+                        while (!done) {
+                            for (int i = 0; i < totalBooks.size(); i++) {
+                                if (totalBooks.get(i).getISBN().equals(ISBN)) {
+                                    System.out.println("That Book already exists! Re-enter a new Book ISBN.");
+                                    validBookISBN= false;
+                                    done = true;
+                                }
+                                else{
+                                    done = true;
+                                    validBookISBN = true;
+                                }
+                            }
+                        }
+                    }
 
                     System.out.println("Enter Book's title: ");
                     String bookTitle = scnr.nextLine();
 
                     System.out.println("Enter Book's publisher name: ");
                     String bookPub = scnr.nextLine();
-                    for (int i = 0; i < totalPublishers.size(); i++) {
-                        if(totalPublishers.get(i).getName().equals(bookPub)){
-                            //publisher exists, can put it into constructor
-                        }
-                        else {
-                            //publisher doesnt exist, need to make it and prompt user for pub info
-                            System.out.println("");
+                    Publishers bookPublisher = new Publishers();
 
+                    boolean pubFound = false;
+                    for (int i = 0; i < totalPublishers.size(); i++) {
+                        // publisher already exists
+                        if(totalPublishers.get(i).getName().equals(bookPub)){
+                            bookPublisher = totalPublishers.get(i);
+                            pubFound = true;
                         }
+                        //publisher doesnt exist yet
+                        else {
+                            pubFound = false;
+                        }
+                    }
+                    // publisher doesn't already exist, needs to be created first
+                    if (!pubFound) {
+                        System.out.println("Publisher doesn't already exist, publisher created!");
+
+                        System.out.println("Enter Publisher phone:");
+                        pubPhone = scnr.nextLine();
+
+                        System.out.println("Enter Publisher email:");
+                        pubEmail = scnr.nextLine();
+
+                        bookPublisher = new Publishers(bookPub, pubPhone, pubEmail);
+                        totalPublishers.add(bookPublisher);
                     }
 
                     System.out.println("Enter Book's authoring entity name: ");
                     String bookAuth = scnr.nextLine();
+                    AuthoringEntities bookAuthEntity = new AuthoringEntities();
+
+                    boolean aeFound = false;
+                    for (int i = 0; i < totalAuthoringEntities.size(); i++) {
+                        // Authoring Entity already exists
+                        if (totalAuthoringEntities.get(i).getName().equals(bookAuth)) {
+                            bookAuthEntity = totalAuthoringEntities.get(i);
+                            aeFound = true;
+                        }
+                        // Authoring Entity doesn't exist yet
+                        else {
+                            aeFound = false;
+                        }
+                    }
+                    // FIX ME: Authoring Entity doesn't already exist, needs to be created first
+                    if (!aeFound) {
+                        System.out.println("Authoring Entity doesn't already exist, creating Authoring Entity first");
+                        // copy & paste code in case 1
+
+
+                    }
 
                     System.out.println("Enter Book's year published: ");
-                    String bookYear = scnr.nextLine();
-                    int returnYear = getInt();//check for validity
+                    int bookYear = getInt();
 
-//                    Books b = new Books(returnISBN, bookTitle, , ,returnYear); // FIX ME
+
+//                    Books b = new Books(ISBN, bookTitle, bookPublisher, bookAuthEntity, bookYear); // FIX ME
 //                    totalBooks.add(b);
 
                     validMenuOption = false;
                     scnr.nextLine();
                     break;
                 case 4:
-                    //update a book
-
-
+                   //List specific publisher information
+                    list_publisher_info(totalPublishers);
+                    validMenuOption = false;
                     break;
                 case 5:
-                    //delete a book
-
+                   // List specific book information
+                    display_books(totalBooks);
+                    validMenuOption = false;
                     break;
-                case 6:
-                    //quitting
-                    System.out.println("Quitting...");
-                    System.exit(0);
-                    break;
+//                case 6:
+//                    //List specific writing group information
+//
+//                    break;
+//                case 7:
+//                    //update a book
+//                    break;
+//
+//
+//                case 8:
+//                    //delete a book
+//                    break;
+//                case 9:
+//                    //quitting
+//                    System.out.println("Quitting...");
+//                    System.exit(0);
+//                    break;
                 default:
                     System.out.println("Re-enter a valid option.");
                     validMenuOption = false;
-                    scnr.nextLine();
+
                     break;
             }
         }
@@ -227,11 +353,12 @@ public class MainMenu {
 
     /**
      * Create and persist a list of objects to the database.
-     * @param entities   The list of entities to persist.  These can be any object that has been
-     *                   properly annotated in JPA and marked as "persistable."  I specifically
-     *                   used a Java generic so that I did not have to write this over and over.
+     *
+     * @param entities The list of entities to persist.  These can be any object that has been
+     *                 properly annotated in JPA and marked as "persistable."  I specifically
+     *                 used a Java generic so that I did not have to write this over and over.
      */
-    public <E> void createEntity(List <E> entities) {
+    public <E> void createEntity(List<E> entities) {
         for (E next : entities) {
             LOGGER.info("Persisting: " + next);
             // Use the CarClub entityManager instance variable to get our EntityManager.
@@ -252,7 +379,7 @@ public class MainMenu {
      * in an instance of auto_body_styles to satisfy the foreign key constraint, not just a string
      * representing the name of the style.
      * @param
-     * @return           The auto_body_styles instance corresponding to that style name.
+     * @return The auto_body_styles instance corresponding to that style name.
      */
 //   public auto_body_styles getStyle (String name) {
 //      // Run the native query that we defined in the auto_body_styles entity to find the right style.
@@ -266,6 +393,112 @@ public class MainMenu {
 //         return styles.get(0);
 //      }
 //   }// End of the getStyle method
-} // End of CarClub class
+
+    /**
+     *
+     */
+    public static void display_books(List <Books> books) {
+
+        System.out.println("Books Information\n");
+        if (books.size() == 0){
+            System.out.println("No books available");
+        }
+        else{
+            for (int i = 0; i < books.size(); i++){
+               System.out.println(books.get(i).getISBN()) ;
+            }
+        }
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter Book ISBN:");
+        String pubName = scnr.nextLine();
+        for (int i = 0; i < books.size(); i++) {
+            boolean found = false;
+            if (books.get(i).getISBN().equals(pubName)) {
+                System.out.println(books.get(i).toString());
+            }
+
+            if (!found){
+                System.out.println("Invalid ISBN");
+            }
+        }
+
+
+
+//        if (booklist.size() == 0) {
+//            System.out.println("No books available");
+//
+//        } else {
+//            for (int i = 0; i < booklist.size(); i++) {
+//                System.out.println(booklist.get(i).toString());
+//            }
+//        }
+    }//end of display_books
+
+
+    /**
+     * @param booklist
+     * @param ISBN
+     */
+    public void delete_book(List<Books> booklist, String ISBN) {
+        for (int i = 0; i < booklist.size(); i++) {
+            if (booklist.get(i).getISBN().equals(ISBN)) {
+                booklist.remove(i);
+            } else {
+                //book doesnt exist
+                System.out.println("The book doesn't exists");
+            }
+        }
+    }
+
+    public void update_book() {
+
+    }
+
+    /**
+     * @return
+     */
+    public static int getInt() {
+        Scanner in = new Scanner(System.in);
+        int input = 0;
+        boolean valid = false;
+        while (!valid) {
+            if (in.hasNextInt()) {
+                input = in.nextInt();
+                valid = true;
+            } else {
+                in.next(); //clear invalid string
+                System.out.println("Invalid Input.");
+            }
+        }
+        return input;
+    }
+
+    public static void list_publisher_info(List<Publishers> publishers) {
+        if (publishers.size() == 0) {
+            System.out.println("No Publishers available.");
+        }
+        else {
+            System.out.println("Publisher Information:" + "\n-------------------------------------------");
+            for (int i = 0; i < publishers.size(); i++) {
+                System.out.println(publishers.get(i).getName());
+            }
+        }
+
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter a Publisher Name:");
+        String pubName = scnr.nextLine();
+        for (int i = 0; i < publishers.size(); i++) {
+            boolean found = false;
+            if (publishers.get(i).getName().equals(pubName)) {
+                System.out.println(publishers.get(i).toString());
+                found = true;
+            }
+            if (!found) {
+                System.out.println("Publisher not found.");
+            }
+        }
+        //scnr.nextLine();
+    } // End of CarClub class
+}
 
 

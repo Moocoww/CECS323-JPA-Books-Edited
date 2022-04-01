@@ -11,4 +11,4 @@
 INSERT INTO individualauthors (email, name, authoring_entity_type) VALUES ('georgeorwell@company.com', 'George Orwell', 'Individual Author')
 
 
-INSERT INTO writing_groups (email, name, authoring_entity_type, head_writer, year_formed) VALUES ("shakespearefans@wg.com", "Shakespeare Fans", )
+-- INSERT INTO writing_groups (email, name, authoring_entity_type, head_writer, year_formed) VALUES ("shakespearefans@wg.com", "Shakespeare Fans", )
