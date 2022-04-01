@@ -80,12 +80,17 @@ public class MainMenu {
 //        ae = new IndividualAuthors();
 
         WritingGroups wg1 = new WritingGroups("shakespearefans@wg.com", "Shakespeare Fans", "Writing Group", "Shakespeare", 2022);
+        WritingGroups wg2 = new WritingGroups("candyland@wg.com", "Candy Land", "Writing Group", "Candy", 2019);
+
         IndividualAuthors ia1 = new IndividualAuthors("georgeorwell@company.com", "George Orwell", "Individual Author");
         AdHocTeams adt1 = new AdHocTeams("companyname@company.com", "Pearsons Teams", "Ad Hoc Team");
         System.out.println(ia1);
         System.out.println(adt1);
         System.out.println(wg1);
 
+        List<WritingGroups> wgs = new ArrayList<>();
+        wgs.add(wg1);
+        wgs.add(wg2);
 
         AdHocTeamMembers adtm1 = new AdHocTeamMembers(adt1, ia1);
         IndividualAuthors ia2 = new IndividualAuthors("mehrsabar@company.com", "Mehrsa Baradaran", "Individual Author");
@@ -210,7 +215,7 @@ public class MainMenu {
 
 
                     validMenuOption = false;
-                    scnr.nextLine(); //clearing buffer
+                    //scnr.nextLine(); //clearing buffer
                     break;
                 case 3:
                     // Adding new Book
@@ -289,6 +294,7 @@ public class MainMenu {
                         else {
                             aeFound = false;
                         }
+
                     }
                     // FIX ME: Authoring Entity doesn't already exist, needs to be created first
                     if (!aeFound) {
@@ -321,7 +327,9 @@ public class MainMenu {
 
                     break;
                 case 6:
-                    //List specific writing group information
+                   // List specific writing group information
+                    list_writing_group_info(wgs);
+                    validMenuOption = false;
 
                     break;
 //                case 7:
@@ -533,5 +541,36 @@ public class MainMenu {
                 System.out.println("Publisher not found. Re-enter Publisher name: ");
             }
         }
-    } // End of CarClub class
+    }
+    public static void list_writing_group_info(List<WritingGroups> wg) {
+        if (wg.size() == 0) {
+            System.out.println("No Writing Group available.");
+        }
+        else {
+            System.out.println("-----Writing Group Information----");
+            for (int i = 0; i < wg.size(); i++) {
+                System.out.println((i+1) + ". \t" + wg.get(i).getName());
+            }
+        }
+
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter a Writing Group Name:");
+        String pubName = "";
+        boolean validInput = false;
+
+        while (!validInput) {
+            pubName = scnr.nextLine();
+            boolean found = false;
+            for (int i = 0; i < wg.size(); i++) {
+                if (wg.get(i).getName().equals(pubName)) {
+                    System.out.println(wg.get(i).toString());
+                    found = true;
+                    validInput = true;
+                }
+            }
+            if (!found) {
+                System.out.println("Writing Group not found. Re-enter Writing Group name: ");
+            }
+        }
+    }
 }
