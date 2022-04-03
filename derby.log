@@ -1,6 +1,4 @@
-Warning: Derby (instance a816c00e-017f-d82c-6c9e-0000015baf40) is attempting to boot the database /Users/danielzhang/Documents/2022Spring/CECS323/CECS323-JPA-Books-Edited/database/CustomerOrders even though Derby (instance a816c00e-017f-d7e7-ead3-00000ed06158) may still be active.  Only one instance of Derby should boot a database at a time. Severe and non-recoverable corruption can result and may have already occurred.
 ----------------------------------------------------------------
-<<<<<<< Updated upstream
 Tue Mar 29 22:19:46 PDT 2022:
 Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017f-d943-fe19-00000eeafa58 
 on database directory C:\Users\Vic\Documents\323 Database\CECS323-JPA-Books-Leilani\database\MainMenu with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3764951d 
@@ -11,17 +9,5 @@ user.dir=C:\Users\Vic\Documents\323 Database\CECS323-JPA-Books-Leilani
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
-=======
-Tue Mar 29 17:14:24 PDT 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017f-d82c-6c9e-0000015baf40 
-on database directory /Users/danielzhang/Documents/2022Spring/CECS323/CECS323-JPA-Books-Edited/database/CustomerOrders with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@7b3300e5 
-Loaded from file:/Users/danielzhang/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Azul Systems, Inc.
-java.runtime.version=15.0.6+5-MTS
-user.dir=/Users/danielzhang/Documents/2022Spring/CECS323/CECS323-JPA-Books-Edited
-os.name=Mac OS X
-os.arch=aarch64
-os.version=12.1
->>>>>>> Stashed changes
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
