@@ -149,25 +149,56 @@ public class MainMenu {
                     String aeType = "";
                     String aeName = "";
                     String aeEmail = "";
+                    String headWriterName= "";
+                    int yearFormed;
+                    String addToTeam = "";
 
                     System.out.println("Enter an Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
                     aeType = scnr.nextLine();
 
                     if (aeType.equals("Individual Author")) {
-                        System.out.println("Enter an Indivudual Author name: ");
+                        System.out.println("Enter an Individual Author name: ");
                         aeName = scnr.nextLine();
-                        System.out.println("Enter an Indivudual Author email: ");
+                        System.out.println("Enter an Individual Author email: ");
                         aeEmail = scnr.nextLine();
+                        IndividualAuthors ia = new IndividualAuthors(aeEmail, aeName, aeType);
+                        totalAuthoringEntities.add(ia);
+
+                        // iv. Add an Individual Author to an existing Ad Hoc Team
+                        System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
+                        addToTeam = scnr.nextLine();
+                        if (addToTeam.equalsIgnoreCase("y")) {
+                            // ask for ad hoc team and create adhocteammembers ahtm = new
+                           for (int i = 0; i < ) {
+
+                           }
+                           System.out.println("Enter Ad Hoc Team email: ");
+                           String teamEmail = scnr.nextLine();
+                        }
 
                     }
                     else if (aeType.equals("Ad Hoc Team")) {
-                        System.out.println("Enter an Indivudual Author name: ");
+                        System.out.println("Enter an Ad Hoc Team name: ");
                         aeName = scnr.nextLine();
-                        System.out.println("Enter an Indivudual Author email: ");
+                        System.out.println("Enter an Ad Hoc Team email: ");
                         aeEmail = scnr.nextLine();
+                        AdHocTeams aht = new AdHocTeams(aeEmail, aeName, aeType);
+                        totalAuthoringEntities.add(aht);
 
                     }else if(aeType.equals("Writing Group")){
-                        System.out.println("Enter writer");
+                        System.out.println("Enter Writing Group name: ");
+                        aeName = scnr.nextLine();
+                        System.out.println("Enter Writing Group email: ");
+                        aeEmail = scnr.nextLine();
+                        System.out.println("Enter Head writer name: ");
+                        headWriterName = scnr.nextLine();
+                        System.out.println("Enter year formed: ");
+                        yearFormed = scnr.nextInt();
+                        WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
+                        wgs.add(wg);
+
+
+
                     }
 
 

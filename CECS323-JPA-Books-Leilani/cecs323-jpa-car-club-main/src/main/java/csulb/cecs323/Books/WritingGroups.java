@@ -23,6 +23,9 @@ public class WritingGroups extends AuthoringEntities {
         super();
     }
 
+    public WritingGroups(String aeName, String aeEmail, String headWriterName, int yearFormed) {
+    }
+
     public String getHead_writer() {
         return head_writer;
     }
