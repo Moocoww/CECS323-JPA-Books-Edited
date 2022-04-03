@@ -168,10 +168,10 @@ public class MainMenu {
                         System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
                         addToTeam = scnr.nextLine();
                         if (addToTeam.equalsIgnoreCase("y")) {
-                            // ask for ad hoc team and create adhocteammembers ahtm = new
                            for (int i = 0; i < ) {
 
                            }
+
                            System.out.println("Enter Ad Hoc Team email: ");
                            String teamEmail = scnr.nextLine();
                         }
@@ -565,6 +565,8 @@ public class MainMenu {
         }
         return input;
     }
+
+    public static 
 
     public static void list_publisher_info(List<Publishers> publishers) {
         if (publishers.size() == 0) {

@@ -4,6 +4,15 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name="ReturnAllAdHocTeams",
+                query = "SELECT * " +
+                        "FROM   AuthoringEntities " +
+                        "WHERE  authoring_entity_type = 'Ad Hoc Team' ",
+                resultClass = AuthoringEntities.class
+        )
+})
 public class AuthoringEntities {
     @Id
     @Column(nullable=false, length=80)
