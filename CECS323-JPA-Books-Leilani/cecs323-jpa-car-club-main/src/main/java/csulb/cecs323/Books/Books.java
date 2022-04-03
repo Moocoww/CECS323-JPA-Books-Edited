@@ -1,24 +1,26 @@
-/*
- * Licensed under the Academic Free License (AFL 3.0).
- *     http://opensource.org/licenses/AFL-3.0
- *
- *  This code is distributed to CSULB students in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE, other than educational.
- *
- *  2018 Alvaro Monge <alvaro.monge@csulb.edu>
- *
- */
-
 package csulb.cecs323.Books;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name="ReturnAllBooks",
+                query = "SELECT * " +
+                        "FROM   BOOKS ",
+                resultClass = Books.class
+        ),
+        @NamedNativeQuery(
+                name="ReturnABook",
+                query = "SELECT * " +
+                        "FROM   BOOKS " +
+                        "WHERE  ISBN = ?",
+                resultClass = Books.class
+        )
+})
 public class Books {
     @Id
-
     @Column(nullable=false, length = 17)
     private String ISBN;
 
@@ -27,12 +29,10 @@ public class Books {
 
     @ManyToOne
     @JoinColumn(name = "name", referencedColumnName = "name")
-    @Column(nullable=false, length = 80)
     private Publishers publisher_name;
 
     @ManyToOne
     @JoinColumn(name="email", referencedColumnName = "email")
-    @Column(nullable=false, length = 30)
     private AuthoringEntities authoring_entity_name;
 
     @Column(nullable=false, length = 4)
@@ -91,7 +91,7 @@ public class Books {
 
     @Override
     public String toString(){
-        return "ISBN: " + this.ISBN + "Title: " + this.title + "Publisher name: " + this.publisher_name.getName() + "Authoring entity name: " + this.authoring_entity_name.getName() + "Published year: " + this.year_published;
+        return "ISBN: " + this.ISBN + "\t| Title: " + this.title + "\t| Publisher name: " + this.publisher_name.getName() + "\t| Authoring Entity Name: " + this.authoring_entity_name.getName() + "\t| Year Published: " + this.year_published;
     }
     @Override
     public int hashCode(){return Objects.hash(this.getISBN() , this.getTitle() , this.getPublisher_name() , this.getAuthoring_entity_name() , this.getYear_published());}

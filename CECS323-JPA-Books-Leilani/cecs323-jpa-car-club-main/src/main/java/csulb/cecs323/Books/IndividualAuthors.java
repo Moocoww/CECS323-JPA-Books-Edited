@@ -5,27 +5,26 @@ import javax.persistence.*;
 @Entity
 public class IndividualAuthors extends AuthoringEntities {
 
+//    @ManyToMany(targetEntity = AdHocTeams.class)
+//    private Set adhocTeam;
 
-
-    @ManyToMany(targetEntity = AdHocTeams.class)
-    private Set adhocTeam;
-
+    @ManyToMany
+    Set<AdHocTeams> team;
 
     public IndividualAuthors() {
         super();
     }
 
-    public IndividualAuthors(String email, String name, String authoring_entity_type, Set adhocTeam) {
-        super(email, name, authoring_entity_type);
-        this.adhocTeam = adhocTeam;
+    public IndividualAuthors(String email, String name, String ae) {
+        super(email, name, ae);
+        //this.adhocTeam = adhocTeam;
     }
 
-
-    public Set getAdhocTeam() {
-        return adhocTeam;
-    }
-
-    public void setAdhocTeam(Set adhocTeam) {
-        this.adhocTeam = adhocTeam;
-    }
+//    public Set getAdhocTeam() {
+//        return adhocTeam;
+//    }
+//
+//    public void setAdhocTeam(Set adhocTeam) {
+//        this.adhocTeam = adhocTeam;
+//    }
 }

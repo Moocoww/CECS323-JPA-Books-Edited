@@ -4,13 +4,22 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name="ReturnAllAdHocTeams",
+                query = "SELECT * " +
+                        "FROM   AuthoringEntities " +
+                        "WHERE  authoring_entity_type = 'Ad Hoc Team' ",
+                resultClass = AuthoringEntities.class
+        )
+})
 public class AuthoringEntities {
     @Id
     @Column(nullable=false, length=80)
     protected String email;
 
     @Column(nullable=false, length=80)
-    private String name;
+    protected String name;
 
     @Column(nullable=false, length=80)
     private String authoring_entity_type;
@@ -26,7 +35,7 @@ public class AuthoringEntities {
 
     @Override
     public String toString(){
-        return "Email: " + this.email + "Name: " + this.name + "Authoring entity type: " + this.authoring_entity_type;
+        return "Email: " + this.email + "\t| Name: " + this.name + "\t| Authoring Entity Type: " + this.authoring_entity_type;
 
     }
 

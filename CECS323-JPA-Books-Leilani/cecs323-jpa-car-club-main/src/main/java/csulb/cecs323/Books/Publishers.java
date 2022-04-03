@@ -4,6 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name="ReturnAllPublishers",
+                query = "SELECT * " +
+                        "FROM   Publishers ",
+                resultClass = Publishers.class
+        )
+})
 public class Publishers {
 
     @Id
@@ -52,7 +60,7 @@ public class Publishers {
 
     @Override
     public String toString(){
-        return "Author Name: " + this.name + "Email: " + this.email + "Phone: " + this.phone;
+        return "Publisher Name: " + this.name + "\t| Email: " + this.email + "\t| Phone: " + this.phone;
     }
 
     @Override

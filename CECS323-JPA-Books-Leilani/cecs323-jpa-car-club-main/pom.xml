@@ -62,7 +62,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>csulb.cecs323.MainMenu</mainClass>
+							<mainClass>csulb.cecs323.Books</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
