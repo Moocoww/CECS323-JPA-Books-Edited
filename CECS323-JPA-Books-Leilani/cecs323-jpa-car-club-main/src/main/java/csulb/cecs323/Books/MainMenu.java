@@ -144,40 +144,64 @@ public class MainMenu {
             }
 
             switch (menuOption) {
-//                case 1:
-//                    //Authoring Entity
-//                    System.out.println("Enter an Authoring Entity name: ");
-//                    scnr.nextLine();
+                case 1:
+                    //Authoring Entity
+                    String aeType = "";
+                    String aeName = "";
+                    String aeEmail = "";
+
+                    System.out.println("Enter an Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
+                    aeType = scnr.nextLine();
+
+                    if (aeType.equals("Individual Author")) {
+                        System.out.println("Enter an Indivudual Author name: ");
+                        aeName = scnr.nextLine();
+                        System.out.println("Enter an Indivudual Author email: ");
+                        aeEmail = scnr.nextLine();
+
+                    }
+                    else if (aeType.equals("Ad Hoc Team")) {
+                        System.out.println("Enter an Indivudual Author name: ");
+                        aeName = scnr.nextLine();
+                        System.out.println("Enter an Indivudual Author email: ");
+                        aeEmail = scnr.nextLine();
+
+                    }else if(aeType.equals("Writing Group")){
+                        System.out.println("Enter writer");
+                    }
+
+
+
+                    System.out.println("Enter an Authoring Entity name: ");
+                    scnr.nextLine();
+
+                    //check for existing email
+//                    boolean validAuthEntEmail = false;
+//                    while (!validAuthEntEmail){
+//                        System.out.println("Enter an Authoring Entity email: ");
+//                        String authEntEmail = scnr.nextLine();
 //
-//                    //check for existing email
-////                    boolean validAuthEntEmail = false;
-////                    while (!validAuthEntEmail){
-////                        System.out.println("Enter an Authoring Entity email: ");
-////                        String authEntEmail = scnr.nextLine();
-////
-////
-////
+//
+//
+//                    }
+                    //add writing group
+                    System.out.println("Enter a Writing Group header writer name: ");
+                    String writerName = scan.nextLine();
+                    //check for existing writing group
+//                    boolean exist = false;
+//
+////                    while (!exist){
+////                        for (int i = 0; i < totalAuthoringEntities.size(); i++){
+////                            if (totalAuthoringEntities.get(i).name)
+////                        }
 ////                    }
-//
-//                    //add writing group
-//                    System.out.println("Enter a Writing Group header writer name: ");
-//                    String writerName = scan.nextLine();
-//                    //check for existing writing group
-////                    boolean exist = false;
-////
-//////                    while (!exist){
-//////                        for (int i = 0; i < totalAuthoringEntities.size(); i++){
-//////                            if (totalAuthoringEntities.get(i).name)
-//////                        }
-//////                    }
-//
-//
-//                    //add individual author
-//                    //add ad hoc team
-//                    //add author to ad hoc team
-//                    validMenuOption = false;
-//                    scnr.nextLine();
-//                    break;
+
+                    //add individual author
+                    //add ad hoc team
+                    //add author to ad hoc team
+                    validMenuOption = false;
+                    scnr.nextLine();
+                    break;
                 case 2:
                     // Adding new Publisher
                     boolean validPubName = false;
