@@ -387,17 +387,17 @@ public class MainMenu {
                     validMenuOption = false;
 
                     break;
-//                case 7:
-//                    //update a book
-//                    break;
-//
-//
+                case 7:
+                    // Update a Book – Change the authoring entity for an existing book.
+                    System.out.println("Enter the ISBN of the book you want to update: ");
+                    String findISBN = scnr.nextLine();
+                    MainMenu.update_book(totalBooks, findISBN);
+                    break;
                 case 8:
                     //delete a book
                     System.out.println("Enter the ISBN of the book you want to delete: ");
                     String deleteISBN = scnr.nextLine();
                     MainMenu.delete_book(totalBooks, deleteISBN);
-
                     break;
                 case 9:
                     //quitting
@@ -407,7 +407,6 @@ public class MainMenu {
                 default:
                     System.out.println("Re-enter a valid option.");
                     validMenuOption = false;
-
                     break;
             }
         }
@@ -545,7 +544,31 @@ public class MainMenu {
         }
     }
 
-    public void update_book() {
+    public static void update_book(List<Books> booklist, String ISBN) {
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter the Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
+        String updatedType = scnr.nextLine();
+
+        if (updatedType.equals("Individual Author")) {
+            for (int i = 0; i < booklist.size(); i++) {
+                if (booklist.get(i).getISBN().equals(ISBN)) {
+                    // create new object updatedEntity of type updatedType
+                    //booklist.get(i).get auth ent name
+                    //booklist.get(i).get auth ent email
+                    //booklist.get(i).setAuthoring_entity_name(updatedEntity);
+                }
+            }
+        }
+        else if (updatedType.equals("Ad Hoc Team")) {
+            for (int i = 0; i < booklist.size(); i++) {
+                if (booklist.get(i).getISBN().equals(ISBN)) {
+                    booklist.get(i).getAuthoring_entity_name().setAuthoring_entity_type(updatedType);
+                }
+            }
+        }else if(updatedType.equals("Writing Group")){
+            System.out.println("");
+
+        }
 
     }
 
@@ -567,8 +590,6 @@ public class MainMenu {
         }
         return input;
     }
-
-    public static void
 
     public static void list_publisher_info(List<Publishers> publishers) {
         if (publishers.size() == 0) {
