@@ -458,8 +458,10 @@ public class MainMenu {
 //      }
 //   }// End of the getStyle method
 
-    public static void showAllAdHocTeam(){
-        List<AuthoringEntities> ae = this.entityManager.createNamedQuery()
+    public void showAllAdHocTeam(List<AuthoringEntities> ae){
+
+
+
     }
 
     /**
