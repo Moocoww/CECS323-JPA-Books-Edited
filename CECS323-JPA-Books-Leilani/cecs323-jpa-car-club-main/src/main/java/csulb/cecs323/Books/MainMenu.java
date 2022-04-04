@@ -122,7 +122,7 @@ public class MainMenu {
             String menu = "-- Main Menu --" + "\nEnter an option: " + "\n1. Add an Authoring Entity"
                     + "\n2. Add Publisher" + "\n3. Add Book" + "\n4. List specific publisher information" +
                     "\n5. List specific book information" + "\n6. List specific writing group information" +
-                    "\n7. Update a book" + "\n8. Delete a book" + "\n9. Quit";
+                    "\n7. Update a book" + "\n8. Delete a book" + "\n9. List primary key information"+ "\n10. Quit";
             System.out.println(menu);
             while (!validMenuOption) {
                 try {
@@ -146,38 +146,43 @@ public class MainMenu {
                     int yearFormed;
                     String addToTeam = "";
 
-                    System.out.println("Enter an Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
-                    aeType = scnr.nextLine();
+                    scnr.nextLine();
+                    System.out.println("Enter an Authoring Entity Type (Writing Group, Individual Author or Ad Hoc Team): ");
 
-                    if (aeType.equals("Individual Author")) {
-                        System.out.println("Enter an Individual Author name: ");
-                        aeName = scnr.nextLine();
-                        System.out.println("Enter an Individual Author email: ");
-                        aeEmail = scnr.nextLine();
-//                        if (checkEmail(aeEmail, totalAuthoringEntities) == true){
-//
-//                        }
-                        //check for existing email
+                    //check for valid type
+                    boolean valid = false;
+                    while (!valid) {
+                        aeType = scnr.nextLine();
+                        if (aeType.equalsIgnoreCase("Individual Author")) {
+                            System.out.println("Enter an Individual Author name: ");
+                            aeName = scnr.nextLine();
+                            System.out.println("Enter an Individual Author email: ");
+                            aeEmail = scnr.nextLine();
+
+                            //FIXME
+                            if (checkEmail(aeEmail, totalAuthoringEntities) == true) {
+                                System.out.println("Email is good");
+                            }
+                            //check for existing email
 
 
+                            IndividualAuthors someAuthor = new IndividualAuthors(aeEmail, aeName, aeType);
+                            totalAuthoringEntities.add(someAuthor);
+                            totalIndividualAuthors.add(someAuthor);
 
-                        IndividualAuthors someAuthor = new IndividualAuthors(aeEmail, aeName, aeType);
-                        totalAuthoringEntities.add(someAuthor);
-                        totalIndividualAuthors.add(someAuthor);
+                            // iv. Add an Individual Author to an existing Ad Hoc Team
+                            System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
+                            addToTeam = scnr.nextLine();
+                            if (addToTeam.equalsIgnoreCase("y")) {
+                                books.showAllAdHocTeam();
 
-                        // iv. Add an Individual Author to an existing Ad Hoc Team
-                        System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
-                        addToTeam = scnr.nextLine();
-                        if (addToTeam.equalsIgnoreCase("y")) {
-                            books.showAllAdHocTeam();
+                                System.out.println("Enter Ad Hoc Team email: ");
+                                String teamEmail = scnr.nextLine();
+                                // check if email already exists
 
-                           System.out.println("Enter Ad Hoc Team email: ");
-                           String teamEmail = scnr.nextLine();
-                           // check if email already exists
-
-                           for (int i = 0; i < totalAdHocTeams.size(); i++) {
-                               if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
-                                   AdHocTeamMembers newMember = new AdHocTeamMembers(totalAdHocTeams.get(i), someAuthor);
+                                for (int i = 0; i < totalAdHocTeams.size(); i++) {
+                                    if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
+                                        AdHocTeamMembers newMember = new AdHocTeamMembers(totalAdHocTeams.get(i), someAuthor);
 
                                }
                            }
@@ -191,22 +196,29 @@ public class MainMenu {
                         AdHocTeams aht = new AdHocTeams(aeEmail, aeName, aeType);
                         totalAuthoringEntities.add(aht);
 
-                    }else if(aeType.equals("Writing Group")){
-                        System.out.println("Enter Writing Group name: ");
-                        aeName = scnr.nextLine();
-                        System.out.println("Enter Writing Group email: ");
-                        aeEmail = scnr.nextLine();
-                        //check if email already exists
+                        } else if (aeType.equalsIgnoreCase("Writing Group")) {
+                            System.out.println("Enter Writing Group name: ");
+                            aeName = scnr.nextLine();
+                            System.out.println("Enter Writing Group email: ");
+                            aeEmail = scnr.nextLine();
+                            //check if email already exists
 
-                        System.out.println("Enter Head writer name: ");
-                        headWriterName = scnr.nextLine();
-                        System.out.println("Enter year formed: ");
-                        yearFormed = scnr.nextInt();
-                        WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
-                        //wgs.add(wg);
-                        totalAuthoringEntities.add(wg);
-                        totalWritingGroups.add(wg);
+                            System.out.println("Enter Head writer name: ");
+                            headWriterName = scnr.nextLine();
+                            System.out.println("Enter year formed: ");
+                            yearFormed = scnr.nextInt();
+                            WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
+                            //wgs.add(wg);
+                            totalAuthoringEntities.add(wg);
+                            totalWritingGroups.add(wg);
 
+
+                        }
+                        //all inputs are invalid
+                        else {
+                            System.out.println("Invalid input. Re-enter (Writing Group, Individual Author or Ad Hoc Team):");
+                            valid = false;
+                        }
                     }
 
                     validMenuOption = false;
@@ -377,6 +389,9 @@ public class MainMenu {
                     MainMenu.delete_book(totalBooks, deleteISBN);
                     break;
                 case 9:
+                    //List primary key information for publishers, books, and Authoring Entities
+
+                case 10:
                     //quitting
                     System.out.println("Quitting...");
                     System.exit(0);
@@ -441,7 +456,7 @@ public class MainMenu {
 
 
     public AuthoringEntities showAllAdHocTeam(){
-        List<AuthoringEntities> adHocs = entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
+        List<AuthoringEntities> adHocs = this.entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
 
         if (adHocs.size() == 0){
             System.out.println("No ad hoc teams available");
