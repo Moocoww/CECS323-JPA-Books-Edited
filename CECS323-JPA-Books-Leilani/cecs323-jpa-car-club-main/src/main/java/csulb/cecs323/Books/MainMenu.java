@@ -464,7 +464,7 @@ public class MainMenu {
 
 
     public AuthoringEntities showAllAdHocTeam(){
-        List<AuthoringEntities> adHocs = this.entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
+        List<AuthoringEntities> adHocs = entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
 
         if (adHocs.size() == 0){
             System.out.println("No ad hoc teams available");
