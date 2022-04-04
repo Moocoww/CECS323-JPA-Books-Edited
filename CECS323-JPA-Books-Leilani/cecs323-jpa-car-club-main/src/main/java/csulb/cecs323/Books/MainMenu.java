@@ -53,67 +53,39 @@ public class MainMenu {
     }
 
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         LOGGER.fine("Creating EntityManagerFactory and EntityManager");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("MainMenu");
         EntityManager manager = factory.createEntityManager();
+
         // Create an instance of CarClub and store our new EntityManager as an instance variable.
         MainMenu books = new MainMenu(manager);
-        Scanner scnr = new Scanner(System.in);
 
         LOGGER.fine("Begin of Transaction");
         EntityTransaction tx = manager.getTransaction();
 
         tx.begin();
-        // List of owners that I want to persist.  I could just as easily done this with the seed-data.sql
-//      List <Owners> owners = new ArrayList<Owners>();
-//      owners.add(new Owners("Reese", "Mike", "714-892-5544"));
-//      owners.add(new Owners("Leck", "Carl", "714-321-3729"));
-//      owners.add(new Owners("Guitierez", "Luis", "562-982-2899"));
 //      // Create the list of owners in the database.
 //      carclub.createEntity (owners);
-        //what happened to git
-        //System.out.println("Enter a new publisher: ");
-        //List<WritingGroups>
-
-        //AuthoringEntities ae = new AuthoringEntities("janedoe@gmail.com", "Jane Doe", "Literature");  //cannot instantiate base class
-//        ae = new IndividualAuthors();
 
         WritingGroups wg1 = new WritingGroups("shakespearefans@wg.com", "Shakespeare Fans", "Writing Group", "Shakespeare", 2022);
         WritingGroups wg2 = new WritingGroups("candyland@wg.com", "Candy Land", "Writing Group", "Candy", 2019);
-
         IndividualAuthors ia1 = new IndividualAuthors("georgeorwell@company.com", "George Orwell", "Individual Author");
+        IndividualAuthors ia2 = new IndividualAuthors("mehrsabar@company.com", "Mehrsa Baradaran", "Individual Author");
         AdHocTeams adt1 = new AdHocTeams("companyname@company.com", "Pearsons Teams", "Ad Hoc Team");
-        System.out.println(ia1);
-        System.out.println(adt1);
-        System.out.println(wg1);
+        AdHocTeams adt2 = new AdHocTeams("anotherco@company.com", "Some Other Team", "Ad Hoc Team");
+        AdHocTeamMembers adtm1 = new AdHocTeamMembers(adt1, ia1);
+        AdHocTeamMembers adtm2 = new AdHocTeamMembers(adt1, ia2);
+        Publishers p1 = new Publishers("Oxford Publishers", "800-855-1234", "oxfordpublishers@oxford.com");
+        Publishers p2 = new Publishers("Monkeys", "800-900-9999", "monkey@company.com");
+        Books b1 = new Books("123456", "Animal Farm", p1, wg1, 1999);
+        Books b2 = new Books("123450", "Animals Run", p1, ia1, 1990);
 
         List<WritingGroups> wgs = new ArrayList<>();
         wgs.add(wg1);
         wgs.add(wg2);
 
-        AdHocTeamMembers adtm1 = new AdHocTeamMembers(adt1, ia1);
-        IndividualAuthors ia2 = new IndividualAuthors("mehrsabar@company.com", "Mehrsa Baradaran", "Individual Author");
-
-        AdHocTeamMembers adtm2 = new AdHocTeamMembers(adt1, ia2);
-        List<Books> booklist = new ArrayList<>();
-        List<AdHocTeamMembers> totalmems = new ArrayList<AdHocTeamMembers>();
-        totalmems.add(adtm1);
-        totalmems.add(adtm2);
-        System.out.println(totalmems);
-
-//        System.out.println(adtm1);
-//        System.out.println(adtm2);
-
-        Publishers p1 = new Publishers("Oxford Publishers", "800-855-1234", "oxfordpublishers@oxford.com");
-        Publishers p2 = new Publishers("Monkeys", "800-900-9999", "monkey@company.com");
-        Books b1 = new Books("123456", "Animal Farm", p1, wg1, 1999);
-        Books b2 = new Books("123450", "Animals Run", p1, ia1, 1990);
-        System.out.println(p1);
-        System.out.println(b1);
-
-
-        Scanner scan = new Scanner(System.in);
+        Scanner scnr = new Scanner(System.in);
         int menuOption = -1;
         boolean menuDone = false;
         boolean validMenuOption = false;
@@ -124,6 +96,27 @@ public class MainMenu {
         totalBooks.add(b1);
         totalBooks.add(b2);
         List<AuthoringEntities> totalAuthoringEntities = new ArrayList<AuthoringEntities>();
+        List<IndividualAuthors> totalIndividualAuthors = new ArrayList<IndividualAuthors>();
+        totalIndividualAuthors.add(ia1);
+        totalIndividualAuthors.add(ia2);
+        List<AdHocTeams> totalAdHocTeams = new ArrayList<AdHocTeams>();
+        totalAdHocTeams.add(adt1);
+        totalAdHocTeams.add(adt2);
+        List<WritingGroups> totalWritingGroups = new ArrayList<WritingGroups>();
+        totalWritingGroups.add(wg1);
+        totalWritingGroups.add(wg2);
+        List<AdHocTeamMembers> totalMembers = new ArrayList<AdHocTeamMembers>();
+        totalMembers.add(adtm1);
+        totalMembers.add(adtm2);
+
+        books.createEntity(totalPublishers); // create the list of publishers in the database
+        books.createEntity(totalBooks);
+        books.createEntity(totalAuthoringEntities);
+        books.createEntity(totalIndividualAuthors);
+        books.createEntity(totalAdHocTeams);
+        books.createEntity(totalWritingGroups);
+        books.createEntity(totalMembers);
+        //tx.commit();
 
         while (!menuDone) {
             String menu = "-- Main Menu --" + "\nEnter an option: " + "\n1. Add an Authoring Entity"
@@ -161,27 +154,34 @@ public class MainMenu {
                         aeName = scnr.nextLine();
                         System.out.println("Enter an Individual Author email: ");
                         aeEmail = scnr.nextLine();
-                        IndividualAuthors ia = new IndividualAuthors(aeEmail, aeName, aeType);
-                        totalAuthoringEntities.add(ia);
+//                        if (checkEmail(aeEmail, totalAuthoringEntities) == true){
+//
+//                        }
+                        //check for existing email
+
+
+
+                        IndividualAuthors someAuthor = new IndividualAuthors(aeEmail, aeName, aeType);
+                        totalAuthoringEntities.add(someAuthor);
+                        totalIndividualAuthors.add(someAuthor);
 
                         // iv. Add an Individual Author to an existing Ad Hoc Team
                         System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
                         addToTeam = scnr.nextLine();
                         if (addToTeam.equalsIgnoreCase("y")) {
-                            this.showAllAdHocTeam();
+                            books.showAllAdHocTeam();
 
                            System.out.println("Enter Ad Hoc Team email: ");
                            String teamEmail = scnr.nextLine();
+                           // check if email already exists
 
-                           for (int i = 0; i < totalAuthoringEntities.size(); i++) {
-                               if (totalAuthoringEntities.get(i).getEmail().equals(teamEmail)) {
-                                   AdHocTeams teamToAdd = totalAuthoringEntities.get(i);
+                           for (int i = 0; i < totalAdHocTeams.size(); i++) {
+                               if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
+                                   AdHocTeamMembers newMember = new AdHocTeamMembers(totalAdHocTeams.get(i), someAuthor);
+
                                }
-
                            }
-                           AdHocTeamMembers newMember = new AdHocTeamMembers(, ia);
                         }
-
                     }
                     else if (aeType.equals("Ad Hoc Team")) {
                         System.out.println("Enter an Ad Hoc Team name: ");
@@ -196,40 +196,19 @@ public class MainMenu {
                         aeName = scnr.nextLine();
                         System.out.println("Enter Writing Group email: ");
                         aeEmail = scnr.nextLine();
+                        //check if email already exists
+
                         System.out.println("Enter Head writer name: ");
                         headWriterName = scnr.nextLine();
                         System.out.println("Enter year formed: ");
                         yearFormed = scnr.nextInt();
                         WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
-                        wgs.add(wg);
+                        //wgs.add(wg);
+                        totalAuthoringEntities.add(wg);
+                        totalWritingGroups.add(wg);
 
                     }
 
-
-
-                    System.out.println("Enter an Authoring Entity name: ");
-                    scnr.nextLine();
-
-                    //check for existing email
-//                    boolean validAuthEntEmail = false;
-//                    while (!validAuthEntEmail){
-//                        System.out.println("Enter an Authoring Entity email: ");
-//                        String authEntEmail = scnr.nextLine();
-//
-//
-//
-//                    }
-                    //add writing group
-                    System.out.println("Enter a Writing Group header writer name: ");
-                    String writerName = scan.nextLine();
-                    //check for existing writing group
-//                    boolean exist = false;
-//
-////                    while (!exist){
-////                        for (int i = 0; i < totalAuthoringEntities.size(); i++){
-////                            if (totalAuthoringEntities.get(i).name)
-////                        }
-////                    }
                     validMenuOption = false;
                     scnr.nextLine();
                     break;
@@ -356,12 +335,10 @@ public class MainMenu {
                         System.out.println("Authoring Entity doesn't already exist, creating Authoring Entity first");
                         // copy & paste code in case 1
 
-
                     }
 
                     System.out.println("Enter Book's year published: ");
                     int bookYear = getInt();
-
 
 //                    Books b = new Books(ISBN, bookTitle, bookPublisher, bookAuthEntity, bookYear); // FIX ME
 //                    totalBooks.add(b);
@@ -440,14 +417,14 @@ public class MainMenu {
         }
     } // End of createEntity member method
 
-    /**
-     * Think of this as a simple map from a String to an instance of auto_body_styles that has the
-     * same name, as the string that you pass in.  To create a new Cars instance, you need to pass
-     * in an instance of auto_body_styles to satisfy the foreign key constraint, not just a string
-     * representing the name of the style.
-     * @param
-     * @return The auto_body_styles instance corresponding to that style name.
-     */
+//    /**
+//     * Think of this as a simple map from a String to an instance of auto_body_styles that has the
+//     * same name, as the string that you pass in.  To create a new Cars instance, you need to pass
+//     * in an instance of auto_body_styles to satisfy the foreign key constraint, not just a string
+//     * representing the name of the style.
+//     * @param
+//     * @return The auto_body_styles instance corresponding to that style name.
+//     */
 //   public auto_body_styles getStyle (String name) {
 //      // Run the native query that we defined in the auto_body_styles entity to find the right style.
 //      List<auto_body_styles> styles = this.entityManager.createNamedQuery("ReturnAutoBodyStyle",
@@ -526,6 +503,7 @@ public class MainMenu {
         }
     }
 
+    // FIX ME: not done :(
     public static void update_book(List<Books> booklist, String ISBN) {
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter the Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
@@ -534,21 +512,28 @@ public class MainMenu {
         if (updatedType.equals("Individual Author")) {
             for (int i = 0; i < booklist.size(); i++) {
                 if (booklist.get(i).getISBN().equals(ISBN)) {
-                    // create new object updatedEntity of type updatedType
-                    //booklist.get(i).get auth ent name
-                    //booklist.get(i).get auth ent email
-                    //booklist.get(i).setAuthoring_entity_name(updatedEntity);
+                    IndividualAuthors updatedEntity = new IndividualAuthors();
+                    updatedEntity.setEmail(booklist.get(i).getAuthoring_entity_name().getEmail());
+                    updatedEntity.setName(booklist.get(i).getAuthoring_entity_name().getName());
+                    booklist.get(i).setAuthoring_entity_name(updatedEntity);
+
                 }
             }
         }
         else if (updatedType.equals("Ad Hoc Team")) {
             for (int i = 0; i < booklist.size(); i++) {
                 if (booklist.get(i).getISBN().equals(ISBN)) {
-                    booklist.get(i).getAuthoring_entity_name().setAuthoring_entity_type(updatedType);
+                    AdHocTeams updatedEntity = new AdHocTeams();
+
                 }
             }
         }else if(updatedType.equals("Writing Group")){
-            System.out.println("");
+            for (int i = 0; i < booklist.size(); i++) {
+                if (booklist.get(i).getISBN().equals(ISBN)) {
+                    WritingGroups updatedEntity = new WritingGroups();
+
+                }
+            }
 
         }
 
@@ -604,6 +589,7 @@ public class MainMenu {
             }
         }
     }
+
     public static void list_writing_group_info(List<WritingGroups> wg) {
         if (wg.size() == 0) {
             System.out.println("No Writing Group available.");
