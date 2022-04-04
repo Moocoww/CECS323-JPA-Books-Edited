@@ -168,12 +168,15 @@ public class MainMenu {
                         System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
                         addToTeam = scnr.nextLine();
                         if (addToTeam.equalsIgnoreCase("y")) {
-                           for (int i = 0; i < ) {
-
-                           }
+                            showAllAdHocTeam();
 
                            System.out.println("Enter Ad Hoc Team email: ");
                            String teamEmail = scnr.nextLine();
+
+                           for (int i = 0; i < totalAuthoringEntities.siz; i++) {
+
+                           }
+                           AdHocTeamMembers newMember = new AdHocTeamMembers();
                         }
 
                     }
@@ -196,8 +199,6 @@ public class MainMenu {
                         yearFormed = scnr.nextInt();
                         WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
                         wgs.add(wg);
-
-
 
                     }
 
@@ -226,10 +227,6 @@ public class MainMenu {
 ////                            if (totalAuthoringEntities.get(i).name)
 ////                        }
 ////                    }
-
-                    //add individual author
-                    //add ad hoc team
-                    //add author to ad hoc team
                     validMenuOption = false;
                     scnr.nextLine();
                     break;
@@ -461,6 +458,9 @@ public class MainMenu {
 //      }
 //   }// End of the getStyle method
 
+    public static void showAllAdHocTeam(){
+        List<AuthoringEntities> ae = this.entityManager.createNamedQuery()
+    }
 
     /**
      *
@@ -497,39 +497,7 @@ public class MainMenu {
         }
 
     }//end of display_books
-//    /**
-//     *
-//     */
-//    public static void display_books(List <Books> books) {
-//
-//        System.out.println("-----Books Information----");
-//        if (books.size() == 0){
-//            System.out.println("No books available");
-//        }
-//        else{
-//            for (int i = 0; i < books.size(); i++){
-//                System.out.println(books.get(i).getISBN()) ;
-//            }
-//        }
-//        Scanner scnr = new Scanner(System.in);
-//        System.out.println("Enter Book ISBN:");
-//        String bookName = "";
-//        boolean done = false;
-//        while (!done) {
-//            bookName = scnr.nextLine();
-//            for (int i = 0; i < books.size(); i++) {
-//                boolean found = false;
-//                if (books.get(i).getISBN().equals(bookName)) {
-//                    System.out.println(books.get(i).toString());
-//                    found = true;
-//                    done = true;
-//                }
-//
-//                if (!found) {
-//                    System.out.println("Invalid ISBN. Please Re-enter ISBN: ");
-//                }
-//            }
-//        } //end of display_book
+
 
 //    /**
 //     * @param booklist
