@@ -173,10 +173,13 @@ public class MainMenu {
                            System.out.println("Enter Ad Hoc Team email: ");
                            String teamEmail = scnr.nextLine();
 
-                           for (int i = 0; i < totalAuthoringEntities.siz; i++) {
+                           for (int i = 0; i < totalAuthoringEntities.size(); i++) {
+                               if (totalAuthoringEntities.get(i).getEmail().equals(teamEmail)) {
+                                   AdHocTeams teamToAdd = totalAuthoringEntities.get(i);
+                               }
 
                            }
-                           AdHocTeamMembers newMember = new AdHocTeamMembers();
+                           AdHocTeamMembers newMember = new AdHocTeamMembers(, ia);
                         }
 
                     }
