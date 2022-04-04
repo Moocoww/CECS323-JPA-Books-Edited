@@ -53,7 +53,7 @@ public class MainMenu {
     }
 
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         LOGGER.fine("Creating EntityManagerFactory and EntityManager");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("MainMenu");
         EntityManager manager = factory.createEntityManager();
@@ -168,7 +168,7 @@ public class MainMenu {
                         System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
                         addToTeam = scnr.nextLine();
                         if (addToTeam.equalsIgnoreCase("y")) {
-                            showAllAdHocTeam();
+                            this.showAllAdHocTeam();
 
                            System.out.println("Enter Ad Hoc Team email: ");
                            String teamEmail = scnr.nextLine();
@@ -461,11 +461,20 @@ public class MainMenu {
 //      }
 //   }// End of the getStyle method
 
-    public void showAllAdHocTeam(List<AuthoringEntities> ae){
 
 
+    public AuthoringEntities showAllAdHocTeam(){
+        List<AuthoringEntities> adHocs = this.entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
 
-    }
+        if (adHocs.size() == 0){
+            System.out.println("No ad hoc teams available");
+            return null;
+        }
+        else{
+            return adHocs.get(0);
+        }
+
+    } // End of showAllAdHocTeam method
 
     /**
      *

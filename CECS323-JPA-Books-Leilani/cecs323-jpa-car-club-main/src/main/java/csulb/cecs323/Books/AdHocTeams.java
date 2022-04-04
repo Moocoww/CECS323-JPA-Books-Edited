@@ -3,6 +3,15 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name="ReturnAllAdHocTeams",
+                query = "SELECT * " +
+                        "FROM   AdHocTeams "
+                       ,
+                resultClass = AdHocTeams.class
+        )
+})
 public class AdHocTeams extends AuthoringEntities{
 
     @ManyToMany
