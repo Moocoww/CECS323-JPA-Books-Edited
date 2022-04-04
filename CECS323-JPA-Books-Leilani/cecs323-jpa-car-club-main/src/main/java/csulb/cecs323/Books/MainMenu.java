@@ -392,9 +392,13 @@ public class MainMenu {
 //                    break;
 //
 //
-//                case 8:
-//                    //delete a book
-//                    break;
+                case 8:
+                    //delete a book
+                    System.out.println("Enter the ISBN of the book you want to delete: ");
+                    String deleteISBN = scnr.nextLine();
+                    MainMenu.delete_book(totalBooks, deleteISBN);
+
+                    break;
                 case 9:
                     //quitting
                     System.out.println("Quitting...");
@@ -532,16 +536,14 @@ public class MainMenu {
 //     * @param booklist
 //     * @param ISBN
 //     */
-//    public void delete_book(List<Books> booklist, String ISBN) {
-//        for (int i = 0; i < booklist.size(); i++) {
-//            if (booklist.get(i).getISBN().equals(ISBN)) {
-//                booklist.remove(i);
-//            } else {
-//                //book doesnt exist
-//                System.out.println("The book doesn't exists");
-//            }
-//        }
-//    }
+    public static void delete_book(List<Books> booklist, String ISBN) {
+        for (int i = 0; i < booklist.size(); i++) {
+            if (booklist.get(i).getISBN().equals(ISBN)) {
+                booklist.remove(i);
+                System.out.println("Book successfully deleted.");
+            }
+        }
+    }
 
     public void update_book() {
 
@@ -566,7 +568,7 @@ public class MainMenu {
         return input;
     }
 
-    public static 
+    public static void
 
     public static void list_publisher_info(List<Publishers> publishers) {
         if (publishers.size() == 0) {
