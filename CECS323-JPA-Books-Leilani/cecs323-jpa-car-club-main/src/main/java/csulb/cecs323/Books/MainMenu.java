@@ -181,9 +181,9 @@ public class MainMenu {
                             System.out.println("Enter an Individual Author email: ");
                             aeEmail = scnr.nextLine();
 
-                            //check for existing email
+                            //check for new valid author email
                             IndividualAuthors someAuthor = new IndividualAuthors();
-                            if (checkAuthorEmail(aeEmail, totalAuthoringEntities) == true) {
+                            if (getValidAuthorEmail(aeEmail, totalAuthoringEntities) == true) {
                                 System.out.println("Email is good");
                                 someAuthor.setEmail(aeEmail);
                                 someAuthor.setName(aeName);
@@ -193,36 +193,49 @@ public class MainMenu {
                             }
 
                             // iv. Add an Individual Author to an existing Ad Hoc Team
-                            System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
-                            addToTeam = scnr.nextLine();
-                            if (addToTeam.equalsIgnoreCase("y")) {
+                            boolean doneAdding = false;
+                            while (!doneAdding) {
+                                System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
+                                addToTeam = scnr.nextLine();
+                                if (addToTeam.equalsIgnoreCase("y")) {
+                                    AdHocTeamMembers newMember = new AdHocTeamMembers();
 
-                                //display all existing ad hoc teams
-                                //books.showAllAdHocTeam();
+                                    //display all existing ad hoc teams
+                                    MainMenu.showAllAdHocTeams(totalAdHocTeams);
 
-                                System.out.println("Enter Ad Hoc Team email: ");
-                                String teamEmail = scnr.nextLine();
+                                    System.out.println("Enter Ad Hoc Team email: ");
+                                    String teamEmail = "";
 
-                                // check if email already exists. return true if email isnt already exist.
-                                AdHocTeamMembers newMember = new AdHocTeamMembers();
-                                if (checkAuthorEmail(teamEmail, totalAuthoringEntities) != true){
-                                    System.out.println("Email exist");
+                                    //check if ad hoc team email is valid
+                                    boolean endList = false;
+                                    while(!endList){
+                                        teamEmail = scnr.nextLine();
+                                        for (int i = 0; i < totalAdHocTeams.size(); i++) {
+                                            if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
+                                                //System.out.println("Does it enter here?");
+
+                                                AdHocTeams existingAdHoc = totalAdHocTeams.get(i);
+                                                newMember.setAdhocteam(existingAdHoc);
+                                                newMember.setIndividualAuthor(someAuthor);
+                                                totalMembers.add(newMember); //adding to junction table list
+                                                endList = true;
+                                                doneAdding = true;
+                                            }
+                                        }
+                                        if (endList == false) {
+                                            System.out.println("Try again. Enter a valid email above.");
+
+                                        }
+                                    }
                                 }
-
-//                                for (int i = 0; i < totalAdHocTeams.size(); i++) {
-//                                    if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
-//                                        AdHocTeamMembers newMember = new AdHocTeamMembers(totalAdHocTeams.get(i), someAuthor);
-//
-//                                    }
-//                                }
-
+                                else if (addToTeam.equalsIgnoreCase("n")){
+                                    doneAdding = true;
+                                }
+                                else{
+                                    System.out.println("Invalid option. Please enter y/n. ");//whatever
+                                }
                             }
-                            //what happen if user select "No"
-                            else{
-
-                            }
-
-
+                            valid = true; //
                         }
                         else if (aeType.equalsIgnoreCase("Ad Hoc Team")) {
                             System.out.println("Enter an Ad Hoc Team name: ");
@@ -384,7 +397,6 @@ public class MainMenu {
                     if (!aeFound) {
                         System.out.println("Authoring Entity doesn't already exist, creating Authoring Entity first");
                         // copy & paste code in case 1
-
                     }
 
                     System.out.println("Enter Book's year published: ");
@@ -696,7 +708,7 @@ public class MainMenu {
      * @param author if author email already exists within the database
      * @return true if the email is valid
      */
-    public static boolean checkAuthorEmail(String email, List<AuthoringEntities> author){
+    public static boolean getValidAuthorEmail(String email, List<AuthoringEntities> author){
         Scanner scnr = new Scanner(System.in);
         String email2 = email;
         boolean validInput = false;
