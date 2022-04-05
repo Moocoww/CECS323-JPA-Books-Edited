@@ -206,27 +206,33 @@ public class MainMenu {
                                     System.out.println("Enter Ad Hoc Team email: ");
                                     String teamEmail = "";
 
+                                    checkAdHocEmail(newMember,totalAdHocTeams);
+                                    newMember.setIndividualAuthor(someAuthor);
+                                    totalMembers.add(newMember); //adding to junction table list
+                                    doneAdding = true;
+
+
                                     //check if ad hoc team email is valid
-                                    boolean endList = false;
-                                    while(!endList){
-                                        teamEmail = scnr.nextLine();
-                                        for (int i = 0; i < totalAdHocTeams.size(); i++) {
-                                            if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
-                                                //System.out.println("Does it enter here?");
-
-                                                AdHocTeams existingAdHoc = totalAdHocTeams.get(i);
-                                                newMember.setAdhocteam(existingAdHoc);
-                                                newMember.setIndividualAuthor(someAuthor);
-                                                totalMembers.add(newMember); //adding to junction table list
-                                                endList = true;
-                                                doneAdding = true;
-                                            }
-                                        }
-                                        if (endList == false) {
-                                            System.out.println("Try again. Enter a valid email above.");
-
-                                        }
-                                    }
+//                                    boolean endList = false;
+//                                    while(!endList){
+//                                        teamEmail = scnr.nextLine();
+//                                        for (int i = 0; i < totalAdHocTeams.size(); i++) {
+//                                            if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
+//                                                //System.out.println("Does it enter here?");
+//
+//                                                AdHocTeams existingAdHoc = totalAdHocTeams.get(i);
+//                                                newMember.setAdhocteam(existingAdHoc);
+//                                                newMember.setIndividualAuthor(someAuthor);
+//                                                totalMembers.add(newMember); //adding to junction table list
+//                                                endList = true;
+//                                                doneAdding = true;
+//                                            }
+//                                        }
+//                                        if (endList == false) {
+//                                            System.out.println("Try again. Enter a valid email above.");
+//
+//                                        }
+//                                    }
                                 }
                                 else if (addToTeam.equalsIgnoreCase("n")){
                                     doneAdding = true;
@@ -267,8 +273,8 @@ public class MainMenu {
                                 someTeam.setEmail(aeEmail);
                                 someTeam.setName(aeName);
                                 someTeam.setAuthoring_entity_type(aeType);
-                                totalAuthoringEntities.add(someTeam);
-                                totalWritingGroups.add(someTeam);
+//                                totalAuthoringEntities.add(someTeam);
+//                                totalWritingGroups.add(someTeam);
                             }
                             System.out.println("Enter Head writer name: ");
                             headWriterName = scnr.nextLine();
@@ -410,7 +416,8 @@ public class MainMenu {
                         }
 
                     }
-                    // FIX ME: Authoring Entity doesn't already exist, needs to be created first
+                    // FIXME: Authoring Entity doesn't already exist, needs to be created first
+                    //create function from case 1
                     if (!aeFound) {
                         System.out.println("Authoring Entity doesn't already exist, creating Authoring Entity first");
                         // copy & paste code in case 1
@@ -516,6 +523,34 @@ public class MainMenu {
 //      }
 //   }// End of the getStyle method
 
+    // FIXME: NEED TESTING for case 1
+    public static void checkAdHocEmail(AdHocTeamMembers newMember, List<AdHocTeams> totalAdHocTeams){
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter Ad Hoc Team email: ");
+        String teamEmail = "";
+
+        //check if ad hoc team email is valid
+        boolean endList = false;
+        while(!endList){
+            teamEmail = scnr.nextLine();
+            for (int i = 0; i < totalAdHocTeams.size(); i++) {
+                if (totalAdHocTeams.get(i).getEmail().equalsIgnoreCase(teamEmail)) {
+                    //System.out.println("Does it enter here?");
+
+                    AdHocTeams existingAdHoc = totalAdHocTeams.get(i);
+                    newMember.setAdhocteam(existingAdHoc);
+//                    newMember.setIndividualAuthor(someAuthor);
+//                    totalMembers.add(newMember); //adding to junction table list
+                    endList = true;
+                   // doneAdding = true;
+                }
+            }
+            if (endList == false) {
+                System.out.println("Try again. Enter a valid email above.");
+
+            }
+        }
+    }// end of checkAdHocEmail method
 
     public static void showAllAdHocTeam(List<AdHocTeams> allTeams){
         for (int i = 0; i < allTeams.size(); i++) {
