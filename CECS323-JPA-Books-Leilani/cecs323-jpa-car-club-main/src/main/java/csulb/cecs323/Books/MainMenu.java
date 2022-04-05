@@ -689,7 +689,7 @@ public class MainMenu {
             }
         }
     }//end of list_writing_group_info method
-    
+
     /**
      * Checks if user's input for author's email is valid.
      * @param email if email exists in database
