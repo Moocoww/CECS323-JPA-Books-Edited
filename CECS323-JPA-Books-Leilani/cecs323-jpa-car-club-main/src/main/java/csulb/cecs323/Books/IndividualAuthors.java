@@ -5,9 +5,6 @@ import javax.persistence.*;
 @Entity
 public class IndividualAuthors extends AuthoringEntities {
 
-//    @ManyToMany(targetEntity = AdHocTeams.class)
-//    private Set adhocTeam;
-
     @ManyToMany (mappedBy = "author")
     Set<AdHocTeams> team;
 
@@ -20,11 +17,4 @@ public class IndividualAuthors extends AuthoringEntities {
         //this.adhocTeam = adhocTeam;
     }
 
-//    public Set getAdhocTeam() {
-//        return adhocTeam;
-//    }
-//
-//    public void setAdhocTeam(Set adhocTeam) {
-//        this.adhocTeam = adhocTeam;
-//    }
 }
