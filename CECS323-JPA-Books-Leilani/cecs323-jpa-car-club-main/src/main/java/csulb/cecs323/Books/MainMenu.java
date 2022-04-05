@@ -70,6 +70,8 @@ public class MainMenu {
 
         WritingGroups wg1 = new WritingGroups("shakespearefans@wg.com", "Shakespeare Fans", "Writing Group", "Shakespeare", 2022);
         WritingGroups wg2 = new WritingGroups("candyland@wg.com", "Candy Land", "Writing Group", "Candy", 2019);
+
+        //individual author objects
         IndividualAuthors ia1 = new IndividualAuthors("georgeorwell@company.com", "George Orwell", "Individual Author");
         IndividualAuthors ia2 = new IndividualAuthors("mehrsabar@company.com", "Mehrsa Baradaran", "Individual Author");
         AdHocTeams adt1 = new AdHocTeams("companyname@company.com", "Pearsons Teams", "Ad Hoc Team");
