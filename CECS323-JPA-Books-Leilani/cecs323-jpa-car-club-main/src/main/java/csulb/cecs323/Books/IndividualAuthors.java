@@ -8,7 +8,7 @@ public class IndividualAuthors extends AuthoringEntities {
 //    @ManyToMany(targetEntity = AdHocTeams.class)
 //    private Set adhocTeam;
 
-    @ManyToMany
+    @ManyToMany (mappedBy = "author")
     Set<AdHocTeams> team;
 
     public IndividualAuthors() {

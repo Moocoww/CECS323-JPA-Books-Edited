@@ -24,6 +24,7 @@ public class AuthoringEntities {
     @Column(nullable=false, length=80)
     private String authoring_entity_type;
 
+
     public AuthoringEntities() {
     }
 

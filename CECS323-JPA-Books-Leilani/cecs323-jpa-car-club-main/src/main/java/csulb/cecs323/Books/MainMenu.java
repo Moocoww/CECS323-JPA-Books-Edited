@@ -138,7 +138,7 @@ public class MainMenu {
         books.createEntity(totalAdHocTeams);
         books.createEntity(totalWritingGroups);
         books.createEntity(totalMembers);
-        //tx.commit();
+
 
         while (!menuDone) {
             String menu = "-- Main Menu --" + "\nEnter an option: " + "\n1. Add an Authoring Entity"
@@ -198,7 +198,7 @@ public class MainMenu {
                             if (addToTeam.equalsIgnoreCase("y")) {
 
                                 //display all existing ad hoc teams
-                                books.showAllAdHocTeam();
+                                //books.showAllAdHocTeam();
 
                                 System.out.println("Enter Ad Hoc Team email: ");
                                 String teamEmail = scnr.nextLine();
@@ -484,15 +484,25 @@ public class MainMenu {
 
 
 
-    public AuthoringEntities showAllAdHocTeam(){
-        List<AuthoringEntities> adHocs = this.entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
-
-        if (adHocs.size() == 0){
+    //List<AdHocTeams> allTeams
+    public AuthoringEntities showAllAdHocTeam(List<AdHocTeams> allTeams){
+//        List<AuthoringEntities> adHocs = this.entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
+//
+//        if (adHocs.size() == 0){
+//            System.out.println("No ad hoc teams available");
+//            return null;
+//        }
+//        else{
+//            return adHocs.get(0);
+//        }
+        //for (int i = 0; i < allTeams.size(); i++) {
+        //
+        if (allTeams.size() == 0){
             System.out.println("No ad hoc teams available");
             return null;
         }
         else{
-            return adHocs.get(0);
+            return allTeams.get(0);
         }
 
     } // End of showAllAdHocTeam method

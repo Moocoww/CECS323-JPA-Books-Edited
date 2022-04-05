@@ -6,6 +6,11 @@ import java.util.Set;
 public class AdHocTeams extends AuthoringEntities{
 
     @ManyToMany
+    @JoinTable(
+        name = "AdHocTeamMembers",
+        joinColumns = @JoinColumn(name = "adHocEmail"),
+        inverseJoinColumns =@JoinColumn(name = "authorEmail")
+    )
     Set<IndividualAuthors> author;
 
     public AdHocTeams() {
