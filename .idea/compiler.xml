@@ -6,7 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="cecs323-jpa-Customer-Orders" />
         <module name="cecs323-jpa-CarClub" />
       </profile>
     </annotationProcessing>

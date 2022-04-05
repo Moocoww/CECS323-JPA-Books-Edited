@@ -209,21 +209,30 @@ public class MainMenu {
                                     System.out.println("Email exist");
                                 }
 
-                                for (int i = 0; i < totalAdHocTeams.size(); i++) {
-                                    if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
-                                        AdHocTeamMembers newMember = new AdHocTeamMembers(totalAdHocTeams.get(i), someAuthor);
+//                                for (int i = 0; i < totalAdHocTeams.size(); i++) {
+//                                    if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
+//                                        AdHocTeamMembers newMember = new AdHocTeamMembers(totalAdHocTeams.get(i), someAuthor);
+//
+//                                    }
+//                                }
 
-                               }
-                           }
+                            }
+                            //what happen if user select "No"
+                            else{
+
+                            }
+
+
                         }
-                    }
-                    else if (aeType.equals("Ad Hoc Team")) {
-                        System.out.println("Enter an Ad Hoc Team name: ");
-                        aeName = scnr.nextLine();
-                        System.out.println("Enter an Ad Hoc Team email: ");
-                        aeEmail = scnr.nextLine();
-                        AdHocTeams aht = new AdHocTeams(aeEmail, aeName, aeType);
-                        totalAuthoringEntities.add(aht);
+                        else if (aeType.equalsIgnoreCase("Ad Hoc Team")) {
+                            System.out.println("Enter an Ad Hoc Team name: ");
+                            aeName = scnr.nextLine();
+                            System.out.println("Enter an Ad Hoc Team email: ");
+                            aeEmail = scnr.nextLine();
+                            AdHocTeams aht = new AdHocTeams(aeEmail, aeName, aeType);
+                            totalAuthoringEntities.add(aht);
+                            totalAdHocTeams.add(aht);
+
 
                         } else if (aeType.equalsIgnoreCase("Writing Group")) {
                             System.out.println("Enter Writing Group name: ");
@@ -400,7 +409,7 @@ public class MainMenu {
 
                     break;
                 case 6:
-                   // List specific writing group information
+                    // List specific writing group information
                     list_writing_group_info(wgs);
                     validMenuOption = false;
 
@@ -544,7 +553,7 @@ public class MainMenu {
     }//end of display_books
 
 
-//    /**
+    //    /**
 //     * @param booklist
 //     * @param ISBN
 //     */
@@ -679,5 +688,51 @@ public class MainMenu {
                 System.out.println("Writing Group not found. Re-enter Writing Group name: ");
             }
         }
-    }
-}
+    }//end of list_writing_group_info method
+
+
+    /**
+     * Checks if user's input for author's email is valid.
+     * @param email if email exists in database
+     * @param author if author email already exists within the database
+     * @return true if the email is valid
+     */
+    public static boolean checkAuthorEmail(String email, List<AuthoringEntities> author){
+        Scanner scnr = new Scanner(System.in);
+        String email2 = email;
+        boolean validInput = false;
+        boolean done = true;
+        boolean found =false;
+        while (!found){
+            while (!validInput) {
+                for (int i = 0; i < author.size(); i++) {
+                    if (author.get(i).getEmail().equals(email2)) {
+                        System.out.println("Email already exist. Re-enter another email.");
+                        found = false;
+                        done = false;
+                    }
+
+                }
+                if (done == true){
+                    validInput = true;
+                    found = true;
+                }
+                else {
+                    validInput = false;
+                    done = true;
+                    email2 = scnr.nextLine();
+                }
+            }
+        }
+        if (found){
+            return true;
+        }
+        return false;
+
+
+
+    } //end of checkEmail method
+    //commentshere
+
+} //end of main
+
