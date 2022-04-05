@@ -91,9 +91,9 @@ public class MainMenu {
         Books b1 = new Books("123456", "Animal Farm", p1, wg1, 1999);
         Books b2 = new Books("123450", "Animals Run", p1, ia1, 1990);
 
-        List<WritingGroups> wgs = new ArrayList<>();
-        wgs.add(wg1);
-        wgs.add(wg2);
+//        List<WritingGroups> wgs = new ArrayList<>();
+//        wgs.add(wg1);
+//        wgs.add(wg2);
 
         Scanner scnr = new Scanner(System.in);
         int menuOption = -1;
@@ -201,7 +201,7 @@ public class MainMenu {
                                     AdHocTeamMembers newMember = new AdHocTeamMembers();
 
                                     //display all existing ad hoc teams
-//                                    MainMenu.showAllAdHocTeam(totalAdHocTeams);
+                                    MainMenu.showAllAdHocTeam(totalAdHocTeams);
 
                                     System.out.println("Enter Ad Hoc Team email: ");
                                     String teamEmail = "";
@@ -242,10 +242,18 @@ public class MainMenu {
                             aeName = scnr.nextLine();
                             System.out.println("Enter an Ad Hoc Team email: ");
                             aeEmail = scnr.nextLine();
-                            AdHocTeams aht = new AdHocTeams(aeEmail, aeName, aeType);
-                            totalAuthoringEntities.add(aht);
-                            totalAdHocTeams.add(aht);
 
+                            AdHocTeams someTeam = new AdHocTeams();
+                            //check if email already exists
+                            if (getValidAuthorEmail(aeEmail, totalAuthoringEntities) == true) {
+                                System.out.println("Email is good");
+                                someTeam.setEmail(aeEmail);
+                                someTeam.setName(aeName);
+                                someTeam.setAuthoring_entity_type(aeType);
+                                totalAuthoringEntities.add(someTeam);
+                                totalAdHocTeams.add(someTeam);
+                            }
+                            valid = true;
 
                         } else if (aeType.equalsIgnoreCase("Writing Group")) {
                             System.out.println("Enter Writing Group name: ");
@@ -259,11 +267,9 @@ public class MainMenu {
                             System.out.println("Enter year formed: ");
                             yearFormed = scnr.nextInt();
                             WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
-                            //wgs.add(wg);
                             totalAuthoringEntities.add(wg);
                             totalWritingGroups.add(wg);
-
-
+                            valid = true;
                         }
                         //all inputs are invalid. re-enter the correct Authoring Entity type.
                         else {
@@ -281,11 +287,12 @@ public class MainMenu {
                     String pubName = "";
                     System.out.println("Enter Publisher name:");
                     scnr.nextLine();
+                    boolean done = false;
                     while (!validPubName) {
                         pubName = scnr.nextLine();
 
                         //checking if name already exists
-                        boolean done = false;
+                        //boolean done = false;
                         while (!done) {
                             for (int i = 0; i < totalPublishers.size(); i++) {
                                 if (totalPublishers.get(i).getName().equalsIgnoreCase(pubName)) {
@@ -423,7 +430,7 @@ public class MainMenu {
                     break;
                 case 6:
                     // List specific writing group information
-                    list_writing_group_info(wgs);
+                    list_writing_group_info(totalWritingGroups);
                     validMenuOption = false;
 
                     break;
@@ -505,15 +512,14 @@ public class MainMenu {
 //   }// End of the getStyle method
 
 
-
-    //List<AdHocTeams> allTeams
-    public AuthoringEntities showAllAdHocTeam(List<AdHocTeams> allTeams){
-        if (allTeams.size() == 0){
-            System.out.println("No ad hoc teams available");
-            return null;
-        }
-        else{
-            return allTeams.get(0);
+    public static void showAllAdHocTeam(List<AdHocTeams> allTeams){
+        for (int i = 0; i < allTeams.size(); i++) {
+            if (allTeams.size() == 0){
+                System.out.println("No ad hoc teams available");
+            }
+            else{
+                System.out.println(allTeams.get(i));
+            }
         }
     } // End of showAllAdHocTeam method
 
@@ -540,7 +546,7 @@ public class MainMenu {
             bookName = scnr.nextLine();
             for (int i = 0; i < books.size(); i++) {
 
-                if (books.get(i).getISBN().equals(bookName)) {
+                if (books.get(i).getISBN().equalsIgnoreCase(bookName)) {
                     System.out.println(books.get(i).toString());
                     found = true;
                     done = true;
@@ -642,7 +648,7 @@ public class MainMenu {
             pubName = scnr.nextLine();
             boolean found = false;
             for (int i = 0; i < publishers.size(); i++) {
-                if (publishers.get(i).getName().equals(pubName)) {
+                if (publishers.get(i).getName().equalsIgnoreCase(pubName)) {
                     System.out.println(publishers.get(i).toString());
                     found = true;
                     validInput = true;
@@ -678,7 +684,7 @@ public class MainMenu {
             pubName = scnr.nextLine();
             boolean found = false;
             for (int i = 0; i < wg.size(); i++) {
-                if (wg.get(i).getName().equals(pubName)) {
+                if (wg.get(i).getName().equalsIgnoreCase(pubName)) {
                     System.out.println(wg.get(i).toString());
                     found = true;
                     validInput = true;
