@@ -191,6 +191,7 @@ public class MainMenu {
                             System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
                             addToTeam = scnr.nextLine();
                             if (addToTeam.equalsIgnoreCase("y")) {
+                                //display all existing ad hoc teams
                                 books.showAllAdHocTeam();
 
                                 System.out.println("Enter Ad Hoc Team email: ");
