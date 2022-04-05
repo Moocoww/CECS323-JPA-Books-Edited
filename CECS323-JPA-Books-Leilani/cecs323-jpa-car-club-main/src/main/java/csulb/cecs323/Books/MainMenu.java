@@ -74,12 +74,20 @@ public class MainMenu {
         //individual author objects
         IndividualAuthors ia1 = new IndividualAuthors("georgeorwell@company.com", "George Orwell", "Individual Author");
         IndividualAuthors ia2 = new IndividualAuthors("mehrsabar@company.com", "Mehrsa Baradaran", "Individual Author");
+
+        //add hoc teams objects
         AdHocTeams adt1 = new AdHocTeams("companyname@company.com", "Pearsons Teams", "Ad Hoc Team");
         AdHocTeams adt2 = new AdHocTeams("anotherco@company.com", "Some Other Team", "Ad Hoc Team");
+
+        //ad hoc team members objects
         AdHocTeamMembers adtm1 = new AdHocTeamMembers(adt1, ia1);
         AdHocTeamMembers adtm2 = new AdHocTeamMembers(adt1, ia2);
+
+        //publisher objects
         Publishers p1 = new Publishers("Oxford Publishers", "800-855-1234", "oxfordpublishers@oxford.com");
         Publishers p2 = new Publishers("Monkeys", "800-900-9999", "monkey@company.com");
+
+        //book objects
         Books b1 = new Books("123456", "Animal Farm", p1, wg1, 1999);
         Books b2 = new Books("123450", "Animals Run", p1, ia1, 1990);
 
@@ -175,7 +183,7 @@ public class MainMenu {
 
                             //check for existing email
                             IndividualAuthors someAuthor = new IndividualAuthors();
-                            if (checkEmail(aeEmail, totalAuthoringEntities) == true) {
+                            if (checkAuthorEmail(aeEmail, totalAuthoringEntities) == true) {
                                 System.out.println("Email is good");
                                 someAuthor.setEmail(aeEmail);
                                 someAuthor.setName(aeName);
@@ -184,21 +192,22 @@ public class MainMenu {
                                 totalIndividualAuthors.add(someAuthor);
                             }
 
-
-//                            IndividualAuthors someAuthor = new IndividualAuthors(aeEmail, aeName, aeType);
-//                            totalAuthoringEntities.add(someAuthor);
-//                            totalIndividualAuthors.add(someAuthor);
-
                             // iv. Add an Individual Author to an existing Ad Hoc Team
                             System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
                             addToTeam = scnr.nextLine();
                             if (addToTeam.equalsIgnoreCase("y")) {
+
                                 //display all existing ad hoc teams
                                 books.showAllAdHocTeam();
 
                                 System.out.println("Enter Ad Hoc Team email: ");
                                 String teamEmail = scnr.nextLine();
+
                                 // check if email already exists
+                                AdHocTeamMembers newMember = new AdHocTeamMembers();
+                                if (checkAuthorEmail(teamEmail, totalAuthoringEntities) != true){
+                                    System.out.println("Email exist");
+                                }
 
                                 for (int i = 0; i < totalAdHocTeams.size(); i++) {
                                     if (totalAdHocTeams.get(i).getEmail().equals(teamEmail)) {
@@ -234,7 +243,7 @@ public class MainMenu {
 
 
                         }
-                        //all inputs are invalid
+                        //all inputs are invalid. re-enter the correct Authoring Entity type.
                         else {
                             System.out.println("Invalid input. Re-enter (Writing Group, Individual Author or Ad Hoc Team):");
                             valid = false;
