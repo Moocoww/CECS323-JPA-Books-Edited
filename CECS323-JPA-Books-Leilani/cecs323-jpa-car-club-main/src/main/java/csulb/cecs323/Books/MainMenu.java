@@ -160,7 +160,7 @@ public class MainMenu {
                             aeEmail = scnr.nextLine();
 
                             //FIXME
-                            if (checkEmail(aeEmail, totalAuthoringEntities) == true) {
+                            if (checkEmail(aeEmail, totalIndividualAuthors) == true) {
                                 System.out.println("Email is good");
                             }
                             //check for existing email
