@@ -261,7 +261,15 @@ public class MainMenu {
                             System.out.println("Enter Writing Group email: ");
                             aeEmail = scnr.nextLine();
                             //check if email already exists
-
+                            WritingGroups someTeam = new WritingGroups();
+                            if (getValidAuthorEmail(aeEmail, totalAuthoringEntities) == true) {
+                                System.out.println("Email is good");
+                                someTeam.setEmail(aeEmail);
+                                someTeam.setName(aeName);
+                                someTeam.setAuthoring_entity_type(aeType);
+                                totalAuthoringEntities.add(someTeam);
+                                totalWritingGroups.add(someTeam);
+                            }
                             System.out.println("Enter Head writer name: ");
                             headWriterName = scnr.nextLine();
                             System.out.println("Enter year formed: ");
