@@ -95,6 +95,10 @@ public class MainMenu {
         wgs.add(wg1);
         wgs.add(wg2);
 
+        List<WritingGroups> wgs = new ArrayList<>();
+        wgs.add(wg1);
+        wgs.add(wg2);
+
         Scanner scnr = new Scanner(System.in);
         int menuOption = -1;
         boolean menuDone = false;
@@ -201,7 +205,7 @@ public class MainMenu {
                                     AdHocTeamMembers newMember = new AdHocTeamMembers();
 
                                     //display all existing ad hoc teams
-                                    MainMenu.showAllAdHocTeams(totalAdHocTeams);
+//                                    MainMenu.showAllAdHocTeam(totalAdHocTeams);
 
                                     System.out.println("Enter Ad Hoc Team email: ");
                                     String teamEmail = "";
@@ -701,7 +705,7 @@ public class MainMenu {
             }
         }
     }//end of list_writing_group_info method
-    
+
     /**
      * Checks if user's input for author's email is valid.
      * @param email if email exists in database
