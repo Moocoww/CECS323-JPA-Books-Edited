@@ -95,10 +95,6 @@ public class MainMenu {
         wgs.add(wg1);
         wgs.add(wg2);
 
-        List<WritingGroups> wgs = new ArrayList<>();
-        wgs.add(wg1);
-        wgs.add(wg2);
-
         Scanner scnr = new Scanner(System.in);
         int menuOption = -1;
         boolean menuDone = false;
@@ -511,17 +507,6 @@ public class MainMenu {
 
     //List<AdHocTeams> allTeams
     public AuthoringEntities showAllAdHocTeam(List<AdHocTeams> allTeams){
-//        List<AuthoringEntities> adHocs = this.entityManager.createNamedQuery("ReturnAllAdHocTeams", AuthoringEntities.class).getResultList();
-//
-//        if (adHocs.size() == 0){
-//            System.out.println("No ad hoc teams available");
-//            return null;
-//        }
-//        else{
-//            return adHocs.get(0);
-//        }
-        //for (int i = 0; i < allTeams.size(); i++) {
-        //
         if (allTeams.size() == 0){
             System.out.println("No ad hoc teams available");
             return null;
@@ -529,7 +514,6 @@ public class MainMenu {
         else{
             return allTeams.get(0);
         }
-
     } // End of showAllAdHocTeam method
 
     /**
