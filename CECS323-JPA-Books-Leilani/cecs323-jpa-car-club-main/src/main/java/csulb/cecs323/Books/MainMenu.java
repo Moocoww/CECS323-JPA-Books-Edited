@@ -653,6 +653,7 @@ public class MainMenu {
                     validInput = true;
                 }
             }
+            //
             if (!found) {
                 System.out.println("Writing Group not found. Re-enter Writing Group name: ");
             }
