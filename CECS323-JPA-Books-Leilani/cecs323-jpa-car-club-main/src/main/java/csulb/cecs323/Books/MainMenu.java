@@ -203,7 +203,7 @@ public class MainMenu {
                                 System.out.println("Enter Ad Hoc Team email: ");
                                 String teamEmail = scnr.nextLine();
 
-                                // check if email already exists
+                                // check if email already exists. return true if email isnt already exist.
                                 AdHocTeamMembers newMember = new AdHocTeamMembers();
                                 if (checkAuthorEmail(teamEmail, totalAuthoringEntities) != true){
                                     System.out.println("Email exist");
