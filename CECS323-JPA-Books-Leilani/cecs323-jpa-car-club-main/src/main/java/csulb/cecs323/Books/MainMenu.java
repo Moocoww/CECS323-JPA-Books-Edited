@@ -289,7 +289,6 @@ public class MainMenu {
                     }
 
                     validMenuOption = false;
-//                    scnr.nextLine();
                     break;
                 case 2:
                     // Adding new Publisher
@@ -446,15 +445,11 @@ public class MainMenu {
                     break;
                 case 7:
                     // Update a Book – Change the authoring entity for an existing book.
-                    System.out.println("Enter the ISBN of the book you want to update: ");
-                    String findISBN = scnr.nextLine();
-                    MainMenu.update_book(totalBooks, findISBN);
+                    MainMenu.update_book(totalBooks);
                     break;
                 case 8:
                     //delete a book
-                    System.out.println("Enter the ISBN of the book you want to delete: ");
-                    String deleteISBN = scnr.nextLine();
-                    MainMenu.delete_book(totalBooks, deleteISBN);
+                    MainMenu.delete_book(totalBooks);
                     break;
                 case 9:
                     //List primary key information for publishers, books, and Authoring Entities
@@ -574,49 +569,107 @@ public class MainMenu {
 //     * @param booklist
 //     * @param ISBN
 //     */
-    public static void delete_book(List<Books> booklist, String ISBN) {
-        for (int i = 0; i < booklist.size(); i++) {
-            if (booklist.get(i).getISBN().equals(ISBN)) {
-                booklist.remove(i);
+    //FIXME: test this option, make sure list of books is updated
+    public static void delete_book(List<Books> books) {
+        Scanner scnr = new Scanner(System.in);
+        String deleteISBN = "";
+
+        //prints out all available books for user to see
+        System.out.println("-----Books Information----");
+        if (books.size() == 0){
+            System.out.println("No books available.");
+        }
+        else{
+            for (int i = 0; i < books.size(); i++){
+                System.out.println((i+1) + ". \t" + books.get(i).getISBN()) ;
+            }
+        }
+        System.out.println("Enter the ISBN of the book you want to delete: ");
+        deleteISBN = scnr.nextLine();
+
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getISBN().equals(deleteISBN)) {
+                books.remove(i);
                 System.out.println("Book successfully deleted.");
             }
         }
     }
 
     // FIXME: not done :(
-    public static void update_book(List<Books> booklist, String ISBN) {
+    public static void update_book(List<Books> books) {
         Scanner scnr = new Scanner(System.in);
-        System.out.println("Enter the Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
-        String updatedType = scnr.nextLine();
+        boolean validEntity = false;
+        boolean validISBN = false;
+        boolean flag = false;
+        String findISBN = "";
+        String updatedType = "";
 
-        if (updatedType.equals("Individual Author")) {
-            for (int i = 0; i < booklist.size(); i++) {
-                if (booklist.get(i).getISBN().equals(ISBN)) {
-                    IndividualAuthors updatedEntity = new IndividualAuthors();
-                    updatedEntity.setEmail(booklist.get(i).getAuthoring_entity_name().getEmail());
-                    updatedEntity.setName(booklist.get(i).getAuthoring_entity_name().getName());
-                    booklist.get(i).setAuthoring_entity_name(updatedEntity);
-
-                }
+        //prints out all available books for user to see
+        System.out.println("-----Books Information----");
+        if (books.size() == 0){
+            System.out.println("No books available.");
+        }
+        else{
+            for (int i = 0; i < books.size(); i++){
+                System.out.println((i+1) + ". \t" + books.get(i).getISBN()) ;
             }
         }
-        else if (updatedType.equals("Ad Hoc Team")) {
-            for (int i = 0; i < booklist.size(); i++) {
-                if (booklist.get(i).getISBN().equals(ISBN)) {
-                    AdHocTeams updatedEntity = new AdHocTeams();
 
+        //making sure user enters valid isbn
+        while(!validISBN) {
+            System.out.println("Enter the ISBN of the book you want to update: ");
+            findISBN = scnr.nextLine();
+
+            for (int i = 0;  i < books.size(); i++) {
+                if (books.get(i).getISBN().equals(findISBN)) {
+                    //valid input!
+                    flag = true;
+                    validISBN = true;
                 }
             }
-        }else if(updatedType.equals("Writing Group")){
-            for (int i = 0; i < booklist.size(); i++) {
-                if (booklist.get(i).getISBN().equals(ISBN)) {
-                    WritingGroups updatedEntity = new WritingGroups();
-
-                }
+            //invalid input! if not found in booklist, prompts user to reenter an isbn
+            if (flag == false) {
+                System.out.println("Invalid ISBN.");
             }
-
         }
 
+
+        while (!validEntity) {
+            System.out.println("Enter the Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
+            updatedType = scnr.nextLine();
+            // can reuse all the code in case 1, aka just call the function here.
+
+//            if (updatedType.equalsIgnoreCase("Individual Author")) {
+//                validEntity = true;
+//                for (int i = 0; i < books.size(); i++) {
+//                    if (booklist.get(i).getISBN().equals(findISBN)) {
+//                        IndividualAuthors updatedEntity = new IndividualAuthors();
+//                        updatedEntity.setEmail(booklist.get(i).getAuthoring_entity_name().getEmail());
+//                        updatedEntity.setName(booklist.get(i).getAuthoring_entity_name().getName());
+//                        booklist.get(i).setAuthoring_entity_name(updatedEntity);
+//
+//                    }
+//                }
+//            } else if (updatedType.equalsIgnoreCase("Ad Hoc Team")) {
+//                validEntity = true;
+//                for (int i = 0; i < booklist.size(); i++) {
+//                    if (booklist.get(i).getISBN().equals(ISBN)) {
+//                        AdHocTeams updatedEntity = new AdHocTeams();
+//
+//                    }
+//                }
+//            } else if(updatedType.equalsIgnoreCase("Writing Group")){
+//                validEntity = true;
+//                for (int i = 0; i < booklist.size(); i++) {
+//                    if (booklist.get(i).getISBN().equals(ISBN)) {
+//                        WritingGroups updatedEntity = new WritingGroups();
+//
+//                    }
+//                }
+//            } else {
+//                System.out.println("Invalid input. Please re-enter a valid entity name. ");
+//            }
+        }
     }
 
     /**
