@@ -376,7 +376,7 @@ public class MainMenu {
                     boolean pubFound = false;
                     for (int i = 0; i < totalPublishers.size(); i++) {
                         // publisher already exists
-                        if(totalPublishers.get(i).getName().equals(bookPub)){
+                        if(totalPublishers.get(i).getName().equalsIgnoreCase(bookPub)){
                             bookPublisher = totalPublishers.get(i);
                             pubFound = true;
                         }
@@ -459,6 +459,8 @@ public class MainMenu {
                     MainMenu.update_book(totalBooks);
                     validMenuOption = false;
                     break;
+
+               //GOOD
                 case 8:
                     //delete a book
                     MainMenu.delete_book(totalBooks);
@@ -574,7 +576,7 @@ public class MainMenu {
                         //display all existing ad hoc teams
                         MainMenu.showAllAdHocTeam(totalAHT);
 
-                        System.out.println("Enter Ad Hoc Team email: ");
+
                         String teamEmail = "";
 
                         checkAdHocEmail(newMember,totalAHT);
@@ -740,8 +742,6 @@ public class MainMenu {
             teamEmail = scnr.nextLine();
             for (int i = 0; i < totalAdHocTeams.size(); i++) {
                 if (totalAdHocTeams.get(i).getEmail().equalsIgnoreCase(teamEmail)) {
-                    //System.out.println("Does it enter here?");
-
                     AdHocTeams existingAdHoc = totalAdHocTeams.get(i);
                     newMember.setAdhocteam(existingAdHoc);
 //                    newMember.setIndividualAuthor(someAuthor);
