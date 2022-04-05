@@ -457,10 +457,12 @@ public class MainMenu {
                 case 7:
                     // Update a Book – Change the authoring entity for an existing book.
                     MainMenu.update_book(totalBooks);
+                    validMenuOption = false;
                     break;
                 case 8:
                     //delete a book
                     MainMenu.delete_book(totalBooks);
+                    validMenuOption = false;
                     break;
                 case 9:
                     //List primary key information for publishers, books, and Authoring Entities
@@ -537,7 +539,7 @@ public class MainMenu {
         int yearFormed;
         String addToTeam = "";
 
-        scnr.nextLine();
+        //scnr.nextLine();
         System.out.println("Enter an Authoring Entity Type (Writing Group, Individual Author or Ad Hoc Team): ");
 
         //check for valid authoring entity type
@@ -803,11 +805,11 @@ public class MainMenu {
     }//end of display_books
 
 
-    //    /**
-//     * @param booklist
-//     * @param ISBN
-//     */
-    //FIXME: test this option, make sure list of books is updated
+    /** This function shows the user a list of all available books so they can choose
+     * which to delete from the database.
+     *
+     * @param books This is a list of books in the database.
+     */
     public static void delete_book(List<Books> books) {
         Scanner scnr = new Scanner(System.in);
         String deleteISBN = "";
@@ -820,20 +822,21 @@ public class MainMenu {
         else{
             for (int i = 0; i < books.size(); i++){
                 System.out.println((i+1) + ". \t" + books.get(i).getISBN()) ;
-            }
-        }
-        System.out.println("Enter the ISBN of the book you want to delete: ");
-        deleteISBN = scnr.nextLine();
 
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getISBN().equals(deleteISBN)) {
-                books.remove(i);
-                System.out.println("Book successfully deleted.");
+            }
+            System.out.println("Enter the ISBN of the book you want to delete: ");
+            deleteISBN = scnr.nextLine();
+
+            for (int i = 0; i < books.size(); i++) {
+                if (books.get(i).getISBN().equals(deleteISBN)) {
+                    books.remove(i);
+                    System.out.println("Book successfully deleted.");
+                }
             }
         }
     }
 
-    // FIXME: not done :(
+    // FIXME: use addAuthoringEntity() function
     public static void update_book(List<Books> books) {
         Scanner scnr = new Scanner(System.in);
         boolean validEntity = false;
