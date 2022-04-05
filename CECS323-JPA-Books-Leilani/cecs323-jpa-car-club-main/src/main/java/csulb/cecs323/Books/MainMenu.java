@@ -288,15 +288,16 @@ public class MainMenu {
                         boolean done = false;
                         while (!done) {
                             for (int i = 0; i < totalPublishers.size(); i++) {
-                                if (totalPublishers.get(i).getName().equals(pubName)) {
+                                if (totalPublishers.get(i).getName().equalsIgnoreCase(pubName)) {
                                     System.out.println("That Publisher already exists! Re-enter a new Publisher name.");
                                     validPubName = false;
-                                    done = true;
+                                    done = false;
                                 }
-                                else{
-                                    done = true;
-                                    validPubName = true;
-                                }
+
+                            }
+
+                            if (done == true){
+                                validPubName = true;
                             }
                         }
                     }
@@ -326,16 +327,16 @@ public class MainMenu {
                         ISBN = scnr.nextLine();
 
                         //checking if book already exists
-                        boolean done = false;
-                        while (!done) {
+                        boolean donedone = false;
+                        while (!donedone) {
                             for (int i = 0; i < totalBooks.size(); i++) {
                                 if (totalBooks.get(i).getISBN().equals(ISBN)) {
                                     System.out.println("That Book already exists! Re-enter a new Book ISBN.");
                                     validBookISBN= false;
-                                    done = true;
+                                    donedone = true;
                                 }
                                 else{
-                                    done = true;
+                                    donedone = true;
                                     validBookISBN = true;
                                 }
                             }
