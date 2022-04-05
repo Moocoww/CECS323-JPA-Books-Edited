@@ -109,6 +109,18 @@ public class MainMenu {
         totalMembers.add(adtm1);
         totalMembers.add(adtm2);
 
+        //add all the author groups into Authoring Entities
+        totalAuthoringEntities.add(ia1); //add individual author
+        totalAuthoringEntities.add(ia2); //add individual author
+
+        totalAuthoringEntities.add(wg1); //add writing group
+        totalAuthoringEntities.add(wg2); //add writing group
+
+        totalAuthoringEntities.add(adt1); //add adhocteam
+        totalAuthoringEntities.add(adt2); //add adhocteam
+
+
+        //create entity for database
         books.createEntity(totalPublishers); // create the list of publishers in the database
         books.createEntity(totalBooks);
         books.createEntity(totalAuthoringEntities);
@@ -149,7 +161,7 @@ public class MainMenu {
                     scnr.nextLine();
                     System.out.println("Enter an Authoring Entity Type (Writing Group, Individual Author or Ad Hoc Team): ");
 
-                    //check for valid type
+                    //check for valid authoring entity type
                     boolean valid = false;
                     while (!valid) {
                         aeType = scnr.nextLine();
@@ -159,16 +171,21 @@ public class MainMenu {
                             System.out.println("Enter an Individual Author email: ");
                             aeEmail = scnr.nextLine();
 
-                            //FIXME
-                            if (checkEmail(aeEmail, totalIndividualAuthors) == true) {
-                                System.out.println("Email is good");
-                            }
                             //check for existing email
+                            IndividualAuthors someAuthor = new IndividualAuthors();
+                            if (checkEmail(aeEmail, totalAuthoringEntities) == true) {
+                                System.out.println("Email is good");
+                                someAuthor.setEmail(aeEmail);
+                                someAuthor.setName(aeName);
+                                someAuthor.setAuthoring_entity_type(aeType);
+                                totalAuthoringEntities.add(someAuthor);
+                                totalIndividualAuthors.add(someAuthor);
+                            }
 
 
-                            IndividualAuthors someAuthor = new IndividualAuthors(aeEmail, aeName, aeType);
-                            totalAuthoringEntities.add(someAuthor);
-                            totalIndividualAuthors.add(someAuthor);
+//                            IndividualAuthors someAuthor = new IndividualAuthors(aeEmail, aeName, aeType);
+//                            totalAuthoringEntities.add(someAuthor);
+//                            totalIndividualAuthors.add(someAuthor);
 
                             // iv. Add an Individual Author to an existing Ad Hoc Team
                             System.out.println("Would you like to add an Individual Author to an existing Ad Hoc Team? (y/n): ");
@@ -605,6 +622,10 @@ public class MainMenu {
         }
     }
 
+    /**
+     *
+     * @param wg
+     */
     public static void list_writing_group_info(List<WritingGroups> wg) {
         if (wg.size() == 0) {
             System.out.println("No Writing Group available.");
