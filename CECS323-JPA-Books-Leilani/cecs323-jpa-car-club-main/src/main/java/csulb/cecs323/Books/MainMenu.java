@@ -274,9 +274,11 @@ public class MainMenu {
                             headWriterName = scnr.nextLine();
                             System.out.println("Enter year formed: ");
                             yearFormed = scnr.nextInt();
-                            WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
-                            totalAuthoringEntities.add(wg);
-                            totalWritingGroups.add(wg);
+                            //WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
+                            someTeam.setHead_writer(headWriterName);
+                            someTeam.setYear_formed(yearFormed);
+                            totalAuthoringEntities.add(someTeam);
+                            totalWritingGroups.add(someTeam);
                             valid = true;
                         }
                         //all inputs are invalid. re-enter the correct Authoring Entity type.
@@ -287,7 +289,7 @@ public class MainMenu {
                     }
 
                     validMenuOption = false;
-                    scnr.nextLine();
+//                    scnr.nextLine();
                     break;
                 case 2:
                     // Adding new Publisher
