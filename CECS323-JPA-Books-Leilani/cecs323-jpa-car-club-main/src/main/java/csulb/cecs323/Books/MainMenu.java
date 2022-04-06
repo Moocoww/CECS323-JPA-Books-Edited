@@ -814,3 +814,4 @@ public class MainMenu {
         return false;
     } //end of checkEmail method
 } //end of main
+
