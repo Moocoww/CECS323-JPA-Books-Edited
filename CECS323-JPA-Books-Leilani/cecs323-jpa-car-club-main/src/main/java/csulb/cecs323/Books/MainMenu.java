@@ -297,6 +297,8 @@ public class MainMenu {
                     addAuthoringEntity(totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers, totalAuthoringEntities);
                     validMenuOption = false;
                     break;
+
+                //GOOD
                 case 2:
                     // Adding new Publisher
                     String pubName = checkPublisherName(totalPublishers);
@@ -341,7 +343,8 @@ public class MainMenu {
                     break;
                 case 3:
 //                    // Adding new Book
-                        checkISBN(totalBooks);
+                    Publishers bookPublisher = new Publishers();
+                    String ISBN = checkISBN(totalBooks);
 //                    boolean validBookISBN = false;
 //                    String ISBN = "";
 //
@@ -367,40 +370,54 @@ public class MainMenu {
 //                            }
 //                        }
 //                    }
-
+                    scnr.nextLine();
                     System.out.println("Enter Book's title: ");
                     String bookTitle = scnr.nextLine();
 
-                    System.out.println("Enter Book's publisher name: ");
-                    String bookPub = scnr.nextLine();
-                    Publishers bookPublisher = new Publishers();
+//                    System.out.println("Enter Book's publisher name: ");
+//                    String bookPub = scnr.nextLine();
 
-                    boolean pubFound = false;
-                    for (int i = 0; i < totalPublishers.size(); i++) {
-                        // publisher already exists
-                        if(totalPublishers.get(i).getName().equalsIgnoreCase(bookPub)){
-                            bookPublisher = totalPublishers.get(i);
-                            pubFound = true;
-                        }
-                        //publisher doesnt exist yet
-                        else {
-                            pubFound = false;
-                        }
-                    }
+                    //check for existing book publisher name
+                    //call case 2
+                    String publisherName = checkPublisherName(totalPublishers);
+
+                    System.out.println("Enter Publisher phone:");
+                    pubPhone = scnr.nextLine();
+                    System.out.println("Enter Publisher email:");
+                    pubEmail = scnr.nextLine();
+
+                    bookPublisher = new Publishers(publisherName, pubPhone, pubEmail);
+                    totalPublishers.add(bookPublisher);
+
+
+//                    Publishers bookPublisher = new Publishers();
+//
+//                    boolean pubFound = false;
+//                    for (int i = 0; i < totalPublishers.size(); i++) {
+//                        // publisher already exists
+//                        if(totalPublishers.get(i).getName().equalsIgnoreCase(bookPub)){
+//                            bookPublisher = totalPublishers.get(i);
+//                            pubFound = true;
+//                        }
+//                        //publisher doesnt exist yet
+//                        else {
+//                            pubFound = false;
+//                        }
+//                    }
                     // publisher doesn't already exist, needs to be created first
-                    if (!pubFound) {
-                        System.out.println("Publisher doesn't already exist, publisher created!");
-
-                        System.out.println("Enter Publisher phone:");
-                        pubPhone = scnr.nextLine();
-
-                        System.out.println("Enter Publisher email:");
-                        pubEmail = scnr.nextLine();
-
-                        bookPublisher = new Publishers(bookPub, pubPhone, pubEmail);
-                        totalPublishers.add(bookPublisher);
-                    }
-
+//                    if (!pubFound) {
+//                        System.out.println("Publisher doesn't already exist, publisher created!");
+//
+//                        System.out.println("Enter Publisher phone:");
+//                        pubPhone = scnr.nextLine();
+//
+//                        System.out.println("Enter Publisher email:");
+//                        pubEmail = scnr.nextLine();
+//
+//                        bookPublisher = new Publishers(bookPub, pubPhone, pubEmail);
+//                        totalPublishers.add(bookPublisher);
+//                    }
+                    //FIXME: shouldnt we ask for their email instead of name???
                     System.out.println("Enter Book's authoring entity name: ");
                     String bookAuth = scnr.nextLine();
                     AuthoringEntities bookAuthEntity = new AuthoringEntities();
@@ -409,7 +426,7 @@ public class MainMenu {
 
                     for (int i = 0; i < totalAuthoringEntities.size(); i++) {
                         // Authoring Entity already exists
-                        if (totalAuthoringEntities.get(i).getName().equals(bookAuth)) {
+                        if (totalAuthoringEntities.get(i).getName().equalsIgnoreCase(bookAuth)) {
                             bookAuthEntity = totalAuthoringEntities.get(i);
                             aeFound = true;
                         }
@@ -702,21 +719,20 @@ public class MainMenu {
         return pubName;
     }
 
-    // FIXME: Need testing for case 2
-    public static void checkISBN(List<Books> totalBooks){
+
+    public static String checkISBN(List<Books> totalBooks){
 
         Scanner scnr = new Scanner(System.in);
         boolean validBookISBN = false;
         String ISBN = "";
-
+        boolean donedone = false;
         System.out.println("Enter Book's ISBN:");
-        scnr.nextLine(); //clear buffer
 
         while (!validBookISBN) {
             ISBN = scnr.nextLine();
-
+            donedone = false;
             //checking if book already exists
-            boolean donedone = false;
+
             while (!donedone) {
                 for (int i = 0; i < totalBooks.size(); i++) {
                     if (totalBooks.get(i).getISBN().equals(ISBN)) {
@@ -724,16 +740,21 @@ public class MainMenu {
                         validBookISBN= false;
                         donedone = true;
                     }
-                    else{
-                        donedone = true;
-                        validBookISBN = true;
-                    }
+//                    else{
+//                        donedone = true;
+//                        validBookISBN = true;
+//                    }
+                }
+                if (donedone == false){
+                    donedone = true;
+                    validBookISBN = true;
                 }
             }
         }
+        return ISBN;
     }//end of checkISBN method
 
-    // FIXME: NEED TESTING for case 1
+
     public static void checkAdHocEmail(AdHocTeamMembers newMember, List<AdHocTeams> totalAdHocTeams){
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter Ad Hoc Team email: ");
