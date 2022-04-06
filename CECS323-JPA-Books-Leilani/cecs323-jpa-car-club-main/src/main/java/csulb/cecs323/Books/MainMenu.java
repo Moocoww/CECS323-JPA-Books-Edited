@@ -133,12 +133,12 @@ public class MainMenu {
 
         //create entity for database
         books.createEntity(totalPublishers); // create the list of publishers in the database
-//        books.createEntity(totalBooks);
-//        books.createEntity(totalAuthoringEntities);
-//        books.createEntity(totalIndividualAuthors);
-//        books.createEntity(totalAdHocTeams);
-//        books.createEntity(totalWritingGroups);
-//        books.createEntity(totalMembers);
+        books.createEntity(totalBooks);
+        books.createEntity(totalAuthoringEntities);
+        books.createEntity(totalIndividualAuthors);
+        books.createEntity(totalAdHocTeams);
+        books.createEntity(totalWritingGroups);
+        books.createEntity(totalMembers);
 
 
         while (!menuDone) {
@@ -160,6 +160,7 @@ public class MainMenu {
             }
 
             switch (menuOption) {
+                //GOOD
                 case 1:
                     //Authoring Entity
 //                    String aeType = "";
@@ -379,12 +380,28 @@ public class MainMenu {
                     String bookTitle = scnr.nextLine();
 
                     //check for existing book publisher name
-                    String publisherName = checkPublisherName(totalPublishers);
+                    System.out.println("Enter Publisher name: ");
+                    //String publisherName = checkPublisherName(totalPublishers);
+                    String publisherName = scnr.nextLine();
+                    boolean publisherExists = false;
+                    pubPhone = "";
+                    pubEmail = "";
 
-                    System.out.println("Enter Publisher phone:");
-                    pubPhone = scnr.nextLine();
-                    System.out.println("Enter Publisher email:");
-                    pubEmail = scnr.nextLine();
+                    //if publisher already exists, autofill the publisher phone and email
+                    for (int i = 0; i < totalPublishers.size(); i++) {
+                        if (totalPublishers.get(i).getName().equalsIgnoreCase(publisherName)) {
+                            pubPhone = totalPublishers.get(i).getPhone();
+                            pubEmail = totalPublishers.get(i).getEmail();
+                            publisherExists = true;
+                        }
+                    }
+                    //if publisher DOESN'T already exist, ask user to enter phone and email
+                    if (publisherExists == false) {
+                        System.out.println("Enter Publisher phone:");
+                        pubPhone = scnr.nextLine();
+                        System.out.println("Enter Publisher email:");
+                        pubEmail = scnr.nextLine();
+                    }
 
                     bookPublisher = new Publishers(publisherName, pubPhone, pubEmail);
                     totalPublishers.add(bookPublisher);
@@ -455,23 +472,28 @@ public class MainMenu {
 
                     break;
                 case 4:
+                    //GOOD
                     //List specific publisher information
                     list_publisher_info(totalPublishers);
                     validMenuOption = false;
 
                     break;
                 case 5:
+                    //GOOD
                     // List specific book information
                     display_books(totalBooks);
                     validMenuOption = false;
 
                     break;
                 case 6:
+                    //GOOD
                     // List specific writing group information
                     list_writing_group_info(totalWritingGroups);
                     validMenuOption = false;
 
                     break;
+
+                    //FIXME:Need fixing
                 case 7:
                     // Update a Book – Change the authoring entity for an existing book.
                     MainMenu.update_book(totalBooks);
@@ -1015,12 +1037,15 @@ public class MainMenu {
             }
         }
 
-        while (!validEntity) {
-            System.out.println("Enter the Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
-            updatedType = scnr.nextLine();
-            // can reuse all the code in case 1, aka just call the function here.
-            //addAuthoringEntity(totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers, totalAuthoringEntities);
-        }
+//        while (!validEntity) {
+////            System.out.println("Enter the Authoring Entity Type (Writing Group, Individual Author, Ad Hoc Team): ");
+////            updatedType = scnr.nextLine();
+//            //AuthoringEntities authEntity = addAuthoringEntity(totalIA, totalAHT, totalWG, totalMems, totalAE);
+//
+//            validEntity = true;
+//            // can reuse all the code in case 1, aka just call the function here.
+//            //addAuthoringEntity(totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers, totalAuthoringEntities);
+//        }
     }// end of update_book method
 
     /**
