@@ -668,6 +668,7 @@ public class MainMenu {
         System.out.println("-----Books Information----");
         if (books.size() == 0){
             System.out.println("No books available.");
+            validISBN = true;
         }
         else{
             for (int i = 0; i < books.size(); i++){
@@ -719,22 +720,16 @@ public class MainMenu {
      * @param publishers
      */
     public static void list_publisher_info(List<Publishers> publishers){
-
-    Set<Publishers> names = new HashSet<>(publishers);
         if (publishers.size() == 0) {
             System.out.println("No Publishers available.");
         }
         else {
             System.out.println("-----Publisher Information----");
             for (int i = 0; i < publishers.size(); i++) {
-
-
-                //if (publishers.get(i))
-                // System.out.println((i+1) + ". \t" + publishers.get(i).getName());
-
+                System.out.println((i+1) + ". \t" + publishers.get(i).getName());
             }
         }
-    }
+
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter a Publisher Name:");
         //checkPublisherName(publishers);
