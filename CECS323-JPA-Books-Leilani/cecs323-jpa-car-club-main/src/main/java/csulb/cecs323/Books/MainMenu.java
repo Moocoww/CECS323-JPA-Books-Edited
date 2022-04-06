@@ -417,12 +417,12 @@ public class MainMenu {
 //                        bookPublisher = new Publishers(bookPub, pubPhone, pubEmail);
 //                        totalPublishers.add(bookPublisher);
 //                    }
-                    //FIXME: shouldnt we ask for their email instead of name???
                     System.out.println("Enter Book's authoring entity name: ");
                     String bookAuth = scnr.nextLine();
                     AuthoringEntities bookAuthEntity = new AuthoringEntities();
 
                     boolean aeFound = false;
+
 
                     for (int i = 0; i < totalAuthoringEntities.size(); i++) {
                         // Authoring Entity already exists
@@ -487,6 +487,27 @@ public class MainMenu {
                     break;
                 case 9:
                     //List primary key information for publishers, books, and Authoring Entities
+                    String menuselect = ("Select a number below: "+
+                            "1.\tList primary key for Publishers"+
+                            "2.\tList primary for Books"+
+                            "3.\tList primary key for Authoring Entities"
+
+                    );
+                    System.out.println(menuselect);
+
+                    int pk = scnr.nextInt();
+                    if (pk == 1){
+
+                    }
+                    else if (pk == 2){
+
+                    }
+                    else if (pk == 3){
+
+                    }
+                    else{
+                        System.out.println("Invalid input. " + menuselect);
+                    }
 
                 case 10:
                     //quitting
@@ -684,7 +705,7 @@ public class MainMenu {
                 valid = false;
             }
         }
-    }
+    }// end of addAuthoringEntity method
 
 
     public static String checkPublisherName(List<Publishers> totalPublishers){
@@ -717,7 +738,7 @@ public class MainMenu {
             }
         }
         return pubName;
-    }
+    } //end of checkPublisherName method
 
 
     public static String checkISBN(List<Books> totalBooks){
@@ -826,7 +847,7 @@ public class MainMenu {
             }
         }
 
-    }//end of display_books
+    }//end of display_books method
 
 
     /** This function shows the user a list of all available books so they can choose
@@ -858,7 +879,7 @@ public class MainMenu {
                 }
             }
         }
-    }
+    }// end of delete_book method
 
     // FIXME: use addAuthoringEntity() function
     public static void update_book(List<Books> books) {
@@ -904,7 +925,7 @@ public class MainMenu {
             // can reuse all the code in case 1, aka just call the function here.
             //addAuthoringEntity(totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers, totalAuthoringEntities);
         }
-    }
+    }// end of update_book method
 
     /**
      * @return
@@ -923,7 +944,7 @@ public class MainMenu {
             }
         }
         return input;
-    }
+    }// end of getInt method
 
     public static void list_publisher_info(List<Publishers> publishers) {
         if (publishers.size() == 0) {
@@ -955,7 +976,7 @@ public class MainMenu {
                 System.out.println("Publisher not found. Re-enter Publisher name: ");
             }
         }
-    }
+    } //end of list_publisher_info method
 
     /**
      *
