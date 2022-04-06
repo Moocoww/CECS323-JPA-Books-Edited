@@ -255,7 +255,6 @@ public class MainMenu {
                             valid = true;
 
                         }
-
                         else if (pk == 2) {
                             getBooksPK(totalBooks);
                             valid = true;
@@ -781,6 +780,7 @@ public class MainMenu {
      * @param author if author email already exists within the database
      * @return true if the email is valid
      */
+
     public static boolean getValidAuthorEmail(String email, List<AuthoringEntities> author){
         Scanner scnr = new Scanner(System.in);
         String email2 = email;
@@ -810,6 +810,7 @@ public class MainMenu {
         if (found){
             return true;
         }
+
         return false;
     } //end of checkEmail method
 } //end of main
