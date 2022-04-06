@@ -131,13 +131,13 @@ public class MainMenu {
 
 
         //create entity for database
-        books.createEntity(totalPublishers); // create the list of publishers in the database
-        books.createEntity(totalBooks);
-        books.createEntity(totalAuthoringEntities);
-        books.createEntity(totalIndividualAuthors);
-        books.createEntity(totalAdHocTeams);
-        books.createEntity(totalWritingGroups);
-        books.createEntity(totalMembers);
+//        books.createEntity(totalPublishers); // create the list of publishers in the database
+//        books.createEntity(totalBooks);
+//        books.createEntity(totalAuthoringEntities);
+//        books.createEntity(totalIndividualAuthors);
+//        books.createEntity(totalAdHocTeams);
+//        books.createEntity(totalWritingGroups);
+//        books.createEntity(totalMembers);
 
 
         while (!menuDone) {
@@ -300,6 +300,7 @@ public class MainMenu {
                 case 2:
                     // Adding new Publisher
                     String pubName = checkPublisherName(totalPublishers);
+                    System.out.println("pubName: " + pubName);
 //                    boolean validPubName = false;
 //                    String pubName = "";
 //                    System.out.println("Enter Publisher name:");
@@ -325,9 +326,10 @@ public class MainMenu {
 //                            }
 //                        }
 //                    }
-
+                    scnr.nextLine();
                     System.out.println("Enter Publisher phone:");
                     String pubPhone = scnr.nextLine();
+
 
                     System.out.println("Enter Publisher email:");
                     String pubEmail = scnr.nextLine();
@@ -667,30 +669,31 @@ public class MainMenu {
         }
     }
 
-    //FIXME: need testing for case 2
+
     public static String checkPublisherName(List<Publishers> totalPublishers){
         Scanner scnr = new Scanner(System.in);
         boolean validPubName = false;
         String pubName = "";
         System.out.println("Enter Publisher name:");
-        scnr.nextLine();
+
         boolean done = false;
         while (!validPubName) {
             pubName = scnr.nextLine();
+            done = false;
 
             //checking if name already exists
-            //boolean done = false;
             while (!done) {
                 for (int i = 0; i < totalPublishers.size(); i++) {
                     if (totalPublishers.get(i).getName().equalsIgnoreCase(pubName)) {
                         System.out.println("That Publisher already exists! Re-enter a new Publisher name.");
                         validPubName = false;
-                        done = false;
+                        done = true;
                     }
 
                 }
 
-                if (done == true){
+                if (done == false){
+                    done = true;
                     validPubName = true;
 
                 }
@@ -985,7 +988,7 @@ public class MainMenu {
         while (!found){
             while (!validInput) {
                 for (int i = 0; i < author.size(); i++) {
-                    if (author.get(i).getEmail().equals(email2)) {
+                    if (author.get(i).getEmail().equalsIgnoreCase(email2)) {
                         System.out.println("Email already exist. Re-enter another email.");
                         found = false;
                         done = false;
