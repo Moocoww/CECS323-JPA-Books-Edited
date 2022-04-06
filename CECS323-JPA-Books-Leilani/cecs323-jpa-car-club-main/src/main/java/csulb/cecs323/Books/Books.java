@@ -17,6 +17,12 @@ import java.util.Objects;
                         "FROM   BOOKS " +
                         "WHERE  ISBN = ?",
                 resultClass = Books.class
+        ),
+        @NamedNativeQuery(
+                name="ReturnBooksPrimaryKey",
+                query = "SELECT ISBN " +
+                        "FROM   BOOKS ",
+                resultClass = Books.class
         )
 })
 public class Books {

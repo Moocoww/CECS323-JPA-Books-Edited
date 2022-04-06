@@ -11,6 +11,13 @@ import java.util.Objects;
                         "FROM   AuthoringEntities " +
                         "WHERE  authoring_entity_type = 'Ad Hoc Team' ",
                 resultClass = AuthoringEntities.class
+        ),
+        @NamedNativeQuery(
+                name="ReturnAuthoringEntityPrimaryKey",
+                query = "SELECT email " +
+                        "FROM   AuthoringEntities "
+                        ,
+                resultClass = AuthoringEntities.class
         )
 })
 public class AuthoringEntities {

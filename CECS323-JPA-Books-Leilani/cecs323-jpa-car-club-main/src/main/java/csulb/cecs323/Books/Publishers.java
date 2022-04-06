@@ -10,7 +10,14 @@ import java.util.Objects;
                 query = "SELECT * " +
                         "FROM   Publishers ",
                 resultClass = Publishers.class
-        )
+        ),
+        @NamedNativeQuery(
+                name="ReturnPublishersPrimaryKey",
+                query = "SELECT name " +
+                        "FROM   Publishers ",
+                resultClass = Publishers.class
+        ),
+
 })
 public class Publishers {
 

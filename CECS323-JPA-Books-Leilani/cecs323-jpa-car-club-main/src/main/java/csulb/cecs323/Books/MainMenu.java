@@ -131,7 +131,7 @@ public class MainMenu {
 
 
         //create entity for database
-//        books.createEntity(totalPublishers); // create the list of publishers in the database
+        books.createEntity(totalPublishers); // create the list of publishers in the database
 //        books.createEntity(totalBooks);
 //        books.createEntity(totalAuthoringEntities);
 //        books.createEntity(totalIndividualAuthors);
@@ -487,27 +487,38 @@ public class MainMenu {
                     break;
                 case 9:
                     //List primary key information for publishers, books, and Authoring Entities
-                    String menuselect = ("Select a number below: "+
-                            "1.\tList primary key for Publishers"+
-                            "2.\tList primary for Books"+
-                            "3.\tList primary key for Authoring Entities"
+                    String menuselect = ("Select a choice below: "+
+                            "\n1.\tList primary key for Publishers."+
+                            "\n2.\tList primary key for Books."+
+                            "\n3.\tList primary key for Authoring Entities."
 
                     );
                     System.out.println(menuselect);
+                    boolean valid = false;
+                    while(!valid) {
+                        int pk = scnr.nextInt();
+                        if (pk == 1) {
+                            books.getPublisherPK();
+                            valid = true;
 
-                    int pk = scnr.nextInt();
-                    if (pk == 1){
+                        }
+                        else if (pk == 2) {
+                            books.getBooksPK();
+                            valid = true;
+                        }
+                        else if (pk == 3) {
+                            books.getAuthoringEntityPK();
+                            valid = true;
+                        }
+                        else {
+                            System.out.println("Invalid input. " + menuselect);
+                            scnr.nextLine();
+                            valid = false;
 
+                        }
                     }
-                    else if (pk == 2){
-
-                    }
-                    else if (pk == 3){
-
-                    }
-                    else{
-                        System.out.println("Invalid input. " + menuselect);
-                    }
+                    validMenuOption = false;
+                    break;
 
                 case 10:
                     //quitting
@@ -706,6 +717,54 @@ public class MainMenu {
             }
         }
     }// end of addAuthoringEntity method
+
+    public void getPublisherPK(){
+        List<Publishers> primarykey = this.entityManager.createNamedQuery("ReturnPublishersPrimaryKey", Publishers.class).getResultList();
+
+        if (primarykey.size() == 0){
+            System.out.println("No publisher available");
+
+        }
+        else{
+            System.out.println("-- Primary keys for Publishers --");
+            for (int i = 0; i < primarykey.size(); i++){
+                System.out.println((i+1) +".\t" + primarykey.get(i).getName());
+            }
+        }
+
+    }// end of getPublishersPK method
+
+    public void getBooksPK(){
+        List<Books> primarykey = this.entityManager.createNamedQuery("ReturnBooksPrimaryKey", Books.class).getResultList();
+
+        if (primarykey.size() == 0){
+            System.out.println("No book available");
+
+        }
+        else{
+            System.out.println("-- Primary keys for Books --");
+            for (int i = 0; i < primarykey.size(); i++){
+                System.out.println((i+1) +".\t" + primarykey.get(i).getISBN());
+            }
+        }
+
+    }// end of getBooksPK method
+
+    public void getAuthoringEntityPK(){
+        List<AuthoringEntities> primarykey = this.entityManager.createNamedQuery("ReturnAuthoringEntityPrimaryKey", AuthoringEntities.class).getResultList();
+
+        if (primarykey.size() == 0){
+            System.out.println("No authoring entity available");
+
+        }
+        else{
+            System.out.println("-- Primary keys for Authoring Entity --");
+            for (int i = 0; i < primarykey.size(); i++){
+                System.out.println((i+1) + ".\t"+ primarykey.get(i).getEmail());
+            }
+        }
+
+    }// end of getAuthoringEntityPK method
 
 
     public static String checkPublisherName(List<Publishers> totalPublishers){
