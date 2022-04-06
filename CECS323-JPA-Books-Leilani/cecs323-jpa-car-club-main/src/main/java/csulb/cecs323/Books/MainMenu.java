@@ -1177,6 +1177,7 @@ public class MainMenu {
         if (found){
             return true;
         }
+
         return false;
 
     } //end of checkEmail method
