@@ -502,11 +502,13 @@ public class MainMenu {
                             valid = true;
 
                         }
+                        //FIXME: need to INSERT statements in seed.sql
                         else if (pk == 2) {
                             books.getBooksPK();
                             valid = true;
                         }
                         else if (pk == 3) {
+                            //FIXME: need to INSERT statements in seed.sql
                             books.getAuthoringEntityPK();
                             valid = true;
                         }
@@ -718,6 +720,9 @@ public class MainMenu {
         }
     }// end of addAuthoringEntity method
 
+    /**
+     * function to get all the publishers primary key.
+     */
     public void getPublisherPK(){
         List<Publishers> primarykey = this.entityManager.createNamedQuery("ReturnPublishersPrimaryKey", Publishers.class).getResultList();
 
@@ -734,6 +739,9 @@ public class MainMenu {
 
     }// end of getPublishersPK method
 
+    /**
+     * function to get all the books primary keys
+     */
     public void getBooksPK(){
         List<Books> primarykey = this.entityManager.createNamedQuery("ReturnBooksPrimaryKey", Books.class).getResultList();
 
@@ -750,6 +758,9 @@ public class MainMenu {
 
     }// end of getBooksPK method
 
+    /**
+     * function to get all the authoring entity primary keys
+     */
     public void getAuthoringEntityPK(){
         List<AuthoringEntities> primarykey = this.entityManager.createNamedQuery("ReturnAuthoringEntityPrimaryKey", AuthoringEntities.class).getResultList();
 
@@ -766,7 +777,11 @@ public class MainMenu {
 
     }// end of getAuthoringEntityPK method
 
-
+    /**
+     * Function check for existing publisher name
+     * @param totalPublishers
+     * @return a string of non-existing publisher name.
+     */
     public static String checkPublisherName(List<Publishers> totalPublishers){
         Scanner scnr = new Scanner(System.in);
         boolean validPubName = false;
@@ -800,6 +815,11 @@ public class MainMenu {
     } //end of checkPublisherName method
 
 
+    /**
+     * Function check for valid ISBN in books
+     * @param totalBooks
+     * @return a string of a non-existing ISBN
+     */
     public static String checkISBN(List<Books> totalBooks){
 
         Scanner scnr = new Scanner(System.in);
@@ -835,6 +855,11 @@ public class MainMenu {
     }//end of checkISBN method
 
 
+    /**
+     * Function check for valid/existing Ad Hoc Team Email.
+     * @param newMember
+     * @param totalAdHocTeams
+     */
     public static void checkAdHocEmail(AdHocTeamMembers newMember, List<AdHocTeams> totalAdHocTeams){
         Scanner scnr = new Scanner(System.in);
         System.out.println("Enter Ad Hoc Team email: ");
@@ -861,6 +886,10 @@ public class MainMenu {
         }
     }// end of checkAdHocEmail method
 
+    /**
+     * Function show all the ad hoc teams available
+     * @param allTeams
+     */
     public static void showAllAdHocTeam(List<AdHocTeams> allTeams){
         for (int i = 0; i < allTeams.size(); i++) {
             if (allTeams.size() == 0){
@@ -873,7 +902,7 @@ public class MainMenu {
     } // End of showAllAdHocTeam method
 
     /**
-     *
+     * Function to display books information
      */
     public static void display_books(List <Books> books) {
 
@@ -987,7 +1016,7 @@ public class MainMenu {
     }// end of update_book method
 
     /**
-     * @return
+     * @return a valid integer
      */
     public static int getInt() {
         Scanner in = new Scanner(System.in);
@@ -1005,6 +1034,10 @@ public class MainMenu {
         return input;
     }// end of getInt method
 
+    /**
+     * Funtion list all the publisher information
+     * @param publishers
+     */
     public static void list_publisher_info(List<Publishers> publishers) {
         if (publishers.size() == 0) {
             System.out.println("No Publishers available.");
@@ -1038,7 +1071,7 @@ public class MainMenu {
     } //end of list_publisher_info method
 
     /**
-     *
+     * Function to list all the writing group information
      * @param wg
      */
     public static void list_writing_group_info(List<WritingGroups> wg) {
