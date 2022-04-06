@@ -1146,6 +1146,7 @@ public class MainMenu {
      * @param author if author email already exists within the database
      * @return true if the email is valid
      */
+
     public static boolean getValidAuthorEmail(String email, List<AuthoringEntities> author){
         Scanner scnr = new Scanner(System.in);
         String email2 = email;
