@@ -6,10 +6,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
-import java.util.Scanner;
+
 /**
  * A simple application to demonstrate how to persist an object in JPA.
  * <p>
@@ -183,12 +182,14 @@ public class MainMenu {
                     boolean publisherExists = false;
                     pubPhone = "";
                     pubEmail = "";
+                    int index = -1;
 
                     //if publisher already exists, autofill the publisher phone and email
                     for (int i = 0; i < totalPublishers.size(); i++) {
                         if (totalPublishers.get(i).getName().equalsIgnoreCase(publisherName)) {
                             pubPhone = totalPublishers.get(i).getPhone();
                             pubEmail = totalPublishers.get(i).getEmail();
+                            index = i;
                             publisherExists = true;
                         }
                     }
@@ -208,8 +209,16 @@ public class MainMenu {
                     System.out.println("Enter Book's year published: ");
                     int bookYear = getInt();
 
-                    Books b = new Books(ISBN, bookTitle, bookPublisher, bookAuthEntity, bookYear);
-                    totalBooks.add(b);
+                    if (publisherExists == true) {
+                        Books b = new Books(ISBN, bookTitle, totalPublishers.get(index), bookAuthEntity, bookYear);
+                        totalBooks.add(b);
+                    }else {
+                        Books b = new Books(ISBN, bookTitle, bookPublisher, bookAuthEntity, bookYear);
+                        totalBooks.add(b);
+
+                    }
+                    //Books b = new Books(ISBN, bookTitle, bookPublisher, bookAuthEntity, bookYear);
+                    //totalBooks.add(b);
 
                     validMenuOption = false;
                     break;
@@ -709,36 +718,43 @@ public class MainMenu {
      * Funtion list all the publisher information
      * @param publishers
      */
-    public static void list_publisher_info(List<Publishers> publishers) {
+    public static void list_publisher_info(List<Publishers> publishers){
+
+    Set<Publishers> names = new HashSet<>(publishers);
         if (publishers.size() == 0) {
             System.out.println("No Publishers available.");
         }
         else {
             System.out.println("-----Publisher Information----");
             for (int i = 0; i < publishers.size(); i++) {
-                System.out.println((i+1) + ". \t" + publishers.get(i).getName());
+
+
+                //if (publishers.get(i))
+                // System.out.println((i+1) + ". \t" + publishers.get(i).getName());
+
             }
         }
-       // Scanner scnr = new Scanner(System.in);
-        //System.out.println("Enter a Publisher Name:");
-        checkPublisherName(publishers);
-//        String pubName = "";
-//        boolean validInput = false;
-//
-//        while (!validInput) {
-//            pubName = scnr.nextLine();
-//            boolean found = false;
-//            for (int i = 0; i < publishers.size(); i++) {
-//                if (publishers.get(i).getName().equalsIgnoreCase(pubName)) {
-//                    System.out.println(publishers.get(i).toString());
-//                    found = true;
-//                    validInput = true;
-//                }
-//            }
-//            if (!found) {
-//                System.out.println("Publisher not found. Re-enter Publisher name: ");
-//            }
-//        }
+    }
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter a Publisher Name:");
+        //checkPublisherName(publishers);
+        String pubName = "";
+        boolean validInput = false;
+
+        while (!validInput) {
+            pubName = scnr.nextLine();
+            boolean found = false;
+            for (int i = 0; i < publishers.size(); i++) {
+                if (publishers.get(i).getName().equalsIgnoreCase(pubName)) {
+                    System.out.println(publishers.get(i).toString());
+                    found = true;
+                    validInput = true;
+                }
+            }
+            if (!found) {
+                System.out.println("Publisher not found. Re-enter Publisher name: ");
+            }
+        }
     } //end of list_publisher_info method
     /**
      * Function to list all the writing group information
