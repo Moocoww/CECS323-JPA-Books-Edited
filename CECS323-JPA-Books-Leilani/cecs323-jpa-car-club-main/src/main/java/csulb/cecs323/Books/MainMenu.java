@@ -66,9 +66,8 @@ public class MainMenu {
         EntityTransaction tx = manager.getTransaction();
 
         tx.begin();
-//      // Create the list of owners in the database.
-//      carclub.createEntity (owners);
 
+        //writing group objects
         WritingGroups wg1 = new WritingGroups("shakespearefans@wg.com", "Shakespeare Fans", "Writing Group", "Shakespeare", 2022);
         WritingGroups wg2 = new WritingGroups("candyland@wg.com", "Candy Land", "Writing Group", "Candy", 2019);
 
@@ -91,10 +90,6 @@ public class MainMenu {
         //book objects
         Books b1 = new Books("123456", "Animal Farm", p1, wg1, 1999);
         Books b2 = new Books("123450", "Animals Run", p1, ia1, 1990);
-
-//        List<WritingGroups> wgs = new ArrayList<>();
-//        wgs.add(wg1);
-//        wgs.add(wg2);
 
         Scanner scnr = new Scanner(System.in);
         int menuOption = -1;
@@ -130,7 +125,6 @@ public class MainMenu {
         totalAuthoringEntities.add(adt1); //add adhocteam
         totalAuthoringEntities.add(adt2); //add adhocteam
 
-
         //create entity for database
         books.createEntity(totalPublishers); // create the list of publishers in the database
         books.createEntity(totalBooks);
@@ -140,7 +134,7 @@ public class MainMenu {
         books.createEntity(totalWritingGroups);
         books.createEntity(totalMembers);
 
-
+        //user menu starts here
         while (!menuDone) {
             String menu = "-- Main Menu --" + "\nEnter an option: " + "\n1. Add an Authoring Entity"
                     + "\n2. Add Publisher" + "\n3. Add Book" + "\n4. List specific publisher information" +
@@ -334,7 +328,6 @@ public class MainMenu {
                     System.out.println("Enter Publisher phone:");
                     String pubPhone = scnr.nextLine();
 
-
                     System.out.println("Enter Publisher email:");
                     String pubEmail = scnr.nextLine();
 
@@ -343,7 +336,6 @@ public class MainMenu {
 
                     validMenuOption = false;
                     break;
-
 
                 //GOOD
                 case 3:
@@ -493,14 +485,14 @@ public class MainMenu {
 
                     break;
 
-                    //FIXME:Need fixing
+                //FIXME:Need fixing
                 case 7:
                     // Update a Book – Change the authoring entity for an existing book.
-                    MainMenu.update_book(totalBooks);
+                    MainMenu.update_book(totalBooks, totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers, totalAuthoringEntities);
                     validMenuOption = false;
                     break;
 
-               //GOOD
+                //GOOD
                 case 8:
                     //delete a book
                     MainMenu.delete_book(totalBooks);
@@ -519,18 +511,18 @@ public class MainMenu {
                     while(!valid) {
                         int pk = scnr.nextInt();
                         if (pk == 1) {
-                            books.getPublisherPK();
+                            getPublisherPK(totalPublishers);
                             valid = true;
 
                         }
                         //FIXME: need to INSERT statements in seed.sql
                         else if (pk == 2) {
-                            books.getBooksPK();
+                            getBooksPK(totalBooks);
                             valid = true;
                         }
                         else if (pk == 3) {
                             //FIXME: need to INSERT statements in seed.sql
-                            books.getAuthoringEntityPK();
+                            getAuthoringEntityPK(totalAuthoringEntities);
                             valid = true;
                         }
                         else {
@@ -553,11 +545,11 @@ public class MainMenu {
                     validMenuOption = false;
                     break;
             }
+            books.entityManager.getTransaction().commit();
         }
-
-
         // Commit the changes so that the new data persists and is visible to other users.
         tx.commit();
+        //books.entityManager.getTransaction().commit();
         LOGGER.fine("End of Transaction");
 
     } // End of the main method
@@ -604,7 +596,7 @@ public class MainMenu {
 //         return styles.get(0);
 //      }
 //   }// End of the getStyle method
-    
+
     public static AuthoringEntities addAuthoringEntity(List<IndividualAuthors> totalIA, List<AdHocTeams> totalAHT, List<WritingGroups> totalWG, List<AdHocTeamMembers> totalMems, List<AuthoringEntities> totalAE) {
         //copy and paste all of code in case 1 to reuse in update_book
         Scanner scnr = new Scanner(System.in);
@@ -753,7 +745,7 @@ public class MainMenu {
     /**
      * function to get all the publishers primary key.
      */
-    public void getPublisherPK(){
+    public static void getPublisherPK(){
         List<Publishers> primarykey = this.entityManager.createNamedQuery("ReturnPublishersPrimaryKey", Publishers.class).getResultList();
 
         if (primarykey.size() == 0){
@@ -772,7 +764,7 @@ public class MainMenu {
     /**
      * function to get all the books primary keys
      */
-    public void getBooksPK(){
+    public static void getBooksPK(){
         List<Books> primarykey = this.entityManager.createNamedQuery("ReturnBooksPrimaryKey", Books.class).getResultList();
 
         if (primarykey.size() == 0){
@@ -906,7 +898,7 @@ public class MainMenu {
 //                    newMember.setIndividualAuthor(someAuthor);
 //                    totalMembers.add(newMember); //adding to junction table list
                     endList = true;
-                   // doneAdding = true;
+                    // doneAdding = true;
                 }
             }
             if (endList == false) {
@@ -1000,7 +992,7 @@ public class MainMenu {
     }// end of delete_book method
 
     // FIXME: use addAuthoringEntity() function
-    public static void update_book(List<Books> books) {
+    public static void update_book(List<Books> books, List<IndividualAuthors> totalIA, List<AdHocTeams> totalAHT, List<WritingGroups> totalWG, List<AdHocTeamMembers> totalMems, List<AuthoringEntities> totalAE) {
         Scanner scnr = new Scanner(System.in);
         boolean validEntity = false;
         boolean validISBN = false;
@@ -1018,7 +1010,7 @@ public class MainMenu {
                 System.out.println((i+1) + ". \t" + books.get(i).getISBN()) ;
             }
         }
-
+//
         //making sure user enters valid isbn
         while(!validISBN) {
             System.out.println("Enter the ISBN of the book you want to update: ");
@@ -1029,6 +1021,9 @@ public class MainMenu {
                     //valid input!
                     flag = true;
                     validISBN = true;
+                    //ask for euth ent here?
+                    AuthoringEntities authEntity = addAuthoringEntity(totalIA, totalAHT, totalWG, totalMems, totalAE);
+                    books.get(i).setAuthoring_entity_name(authEntity);
                 }
             }
             //invalid input! if not found in booklist, prompts user to reenter an isbn
