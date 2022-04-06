@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -294,7 +295,7 @@ public class MainMenu {
 //                    }
 
                     //new function call test...
-                    addAuthoringEntity(totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers, totalAuthoringEntities);
+                    AuthoringEntities someAuthEntity = addAuthoringEntity(totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers, totalAuthoringEntities);
                     validMenuOption = false;
                     break;
 
@@ -341,6 +342,9 @@ public class MainMenu {
 
                     validMenuOption = false;
                     break;
+
+
+                //GOOD
                 case 3:
 //                    // Adding new Book
                     Publishers bookPublisher = new Publishers();
@@ -374,11 +378,7 @@ public class MainMenu {
                     System.out.println("Enter Book's title: ");
                     String bookTitle = scnr.nextLine();
 
-//                    System.out.println("Enter Book's publisher name: ");
-//                    String bookPub = scnr.nextLine();
-
                     //check for existing book publisher name
-                    //call case 2
                     String publisherName = checkPublisherName(totalPublishers);
 
                     System.out.println("Enter Publisher phone:");
@@ -417,43 +417,42 @@ public class MainMenu {
 //                        bookPublisher = new Publishers(bookPub, pubPhone, pubEmail);
 //                        totalPublishers.add(bookPublisher);
 //                    }
-                    System.out.println("Enter Book's authoring entity name: ");
-                    String bookAuth = scnr.nextLine();
-                    AuthoringEntities bookAuthEntity = new AuthoringEntities();
-
-                    boolean aeFound = false;
-
-
-                    for (int i = 0; i < totalAuthoringEntities.size(); i++) {
-                        // Authoring Entity already exists
-                        if (totalAuthoringEntities.get(i).getName().equalsIgnoreCase(bookAuth)) {
-                            bookAuthEntity = totalAuthoringEntities.get(i);
-                            aeFound = true;
-                        }
-                        // Authoring Entity doesn't exist yet
-                        else {
-                            aeFound = false;
-                        }
-
-                    }
-                    // FIXME: Authoring Entity doesn't already exist, needs to be created first
-                    //create function from case 1
-                    if (!aeFound) {
-                        System.out.println("Authoring Entity doesn't already exist, creating Authoring Entity first");
-                        // copy & paste code in case 1
-                        // make sure to add auth entity to book object declared on line 430
-
-                    }
-
+                    System.out.println("-- Enter Book's Authoring Entity Information -- ");
+                    //create a book's authoring entity
+                    AuthoringEntities bookAuthEntity = addAuthoringEntity(totalIndividualAuthors, totalAdHocTeams, totalWritingGroups, totalMembers,totalAuthoringEntities);
+//                    AuthoringEntities bookAuthEntity = new AuthoringEntities();
+//
+//                    boolean aeFound = false;
+//
+//
+//                    for (int i = 0; i < totalAuthoringEntities.size(); i++) {
+//                        // Authoring Entity already exists
+//                        if (totalAuthoringEntities.get(i).getName().equalsIgnoreCase(bookAuth)) {
+//                            bookAuthEntity = totalAuthoringEntities.get(i);
+//                            aeFound = true;
+//                        }
+//                        // Authoring Entity doesn't exist yet
+//                        else {
+//                            aeFound = false;
+//                        }
+//
+//                    }
+//                    // FIXME: Authoring Entity doesn't already exist, needs to be created first
+//                    //create function from case 1
+//                    if (!aeFound) {
+//                        System.out.println("Authoring Entity doesn't already exist, creating Authoring Entity first");
+//                        // copy & paste code in case 1
+//                        // make sure to add auth entity to book object declared on line 430
+//
+//                    }
                     System.out.println("Enter Book's year published: ");
                     int bookYear = getInt();
 
-                    // FIXME: need to add book to db
-                    //Books b = new Books(ISBN, bookTitle, bookPublisher, bookAuthEntity, bookYear);
-                    //totalBooks.add(b);
+                    Books b = new Books(ISBN, bookTitle, bookPublisher, bookAuthEntity, bookYear);
+                    totalBooks.add(b);
 
                     validMenuOption = false;
-                    //scnr.nextLine(); // this might be an extra line, possibly delete?
+
                     break;
                 case 4:
                     //List specific publisher information
@@ -584,7 +583,7 @@ public class MainMenu {
 //      }
 //   }// End of the getStyle method
     
-    public static void addAuthoringEntity(List<IndividualAuthors> totalIA, List<AdHocTeams> totalAHT, List<WritingGroups> totalWG, List<AdHocTeamMembers> totalMems, List<AuthoringEntities> totalAE) {
+    public static AuthoringEntities addAuthoringEntity(List<IndividualAuthors> totalIA, List<AdHocTeams> totalAHT, List<WritingGroups> totalWG, List<AdHocTeamMembers> totalMems, List<AuthoringEntities> totalAE) {
         //copy and paste all of code in case 1 to reuse in update_book
         Scanner scnr = new Scanner(System.in);
         String aeType = "";
@@ -594,6 +593,7 @@ public class MainMenu {
         int yearFormed;
         String addToTeam = "";
 
+        AuthoringEntities someAuthEntity = new AuthoringEntities();
         //scnr.nextLine();
         System.out.println("Enter an Authoring Entity Type (Writing Group, Individual Author or Ad Hoc Team): ");
 
@@ -616,6 +616,7 @@ public class MainMenu {
                     someAuthor.setAuthoring_entity_type(aeType);
                     totalAE.add(someAuthor);
                     totalIA.add(someAuthor);
+                    someAuthEntity = someAuthor;
                 }
 
                 // iv. Add an Individual Author to an existing Ad Hoc Team
@@ -683,6 +684,7 @@ public class MainMenu {
                     someTeam.setAuthoring_entity_type(aeType);
                     totalAE.add(someTeam);
                     totalAHT.add(someTeam);
+                    someAuthEntity = someTeam;
                 }
                 valid = true;
 
@@ -692,12 +694,12 @@ public class MainMenu {
                 System.out.println("Enter Writing Group email: ");
                 aeEmail = scnr.nextLine();
                 //check if email already exists
-                WritingGroups someTeam = new WritingGroups();
+                WritingGroups someGroup = new WritingGroups();
                 if (getValidAuthorEmail(aeEmail, totalAE) == true) {
                     System.out.println("Email is good");
-                    someTeam.setEmail(aeEmail);
-                    someTeam.setName(aeName);
-                    someTeam.setAuthoring_entity_type(aeType);
+                    someGroup.setEmail(aeEmail);
+                    someGroup.setName(aeName);
+                    someGroup.setAuthoring_entity_type(aeType);
 //                                totalAuthoringEntities.add(someTeam);
 //                                totalWritingGroups.add(someTeam);
                 }
@@ -706,18 +708,24 @@ public class MainMenu {
                 System.out.println("Enter year formed: ");
                 yearFormed = scnr.nextInt();
                 //WritingGroups wg = new WritingGroups(aeEmail, aeName, aeType, headWriterName, yearFormed);
-                someTeam.setHead_writer(headWriterName);
-                someTeam.setYear_formed(yearFormed);
-                totalAE.add(someTeam);
-                totalWG.add(someTeam);
+                someGroup.setHead_writer(headWriterName);
+                someGroup.setYear_formed(yearFormed);
+                totalAE.add(someGroup);
+                totalWG.add(someGroup);
+                someAuthEntity = someGroup;
                 valid = true;
             }
             //all inputs are invalid. re-enter the correct Authoring Entity type.
             else {
                 System.out.println("Invalid input. Re-enter (Writing Group, Individual Author or Ad Hoc Team):");
                 valid = false;
+
             }
+
         }
+        return someAuthEntity;
+
+
     }// end of addAuthoringEntity method
 
     /**
